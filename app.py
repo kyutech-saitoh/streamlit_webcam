@@ -5,7 +5,7 @@ import mediapipe as mp
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 
 mp_drawing = mp.solutions.drawing_utils
-mp_drawing_styles = mp.solutions.drawing_styles
+#mp_drawing_styles = mp.solutions.drawing_styles
 mp_holistic = mp.solutions.holistic
 
 holistic = mp_holistic.Holistic(
@@ -14,8 +14,8 @@ holistic = mp_holistic.Holistic(
 )
 
 def process(image):
-    image.flags.writeable = False
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    image.flags.writeable = False
     results = holistic.process(image)
 
     image.flags.writeable = True
