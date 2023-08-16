@@ -6,10 +6,9 @@ from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
-mp_hands = mp.solutions.hands
+mp_holistic = mp.solutions.holistic
 
-hands = mp_hands.Hands(
-    model_complexity=0,
+holistic = mp_holistic.Holistic(
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5
 )
@@ -17,19 +16,19 @@ hands = mp_hands.Hands(
 def process(image):
     image.flags.writeable = False
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    results = hands.process(image)
-# Draw the hand annotations on the image.
+    results = holistic.process(image)
+
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-    if results.multi_hand_landmarks:
-      for hand_landmarks in results.multi_hand_landmarks:
-        mp_drawing.draw_landmarks(
-            image,
-            hand_landmarks,
-            mp_hands.HAND_CONNECTIONS,
-            mp_drawing_styles.get_default_hand_landmarks_style(),
-            mp_drawing_styles.get_default_hand_connections_style())
-
+    mp_drawing.draw_landmarks(
+        image, results.face_landmarks, mp_holistic.FACE_CONNECTIONS)
+    mp_drawing.draw_landmarks(
+        image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
+    mp_drawing.draw_landmarks(
+        image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
+    mp_drawing.draw_landmarks(
+        image, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS)
+    
     return cv2.flip(image, 1)
 
 RTC_CONFIGURATION = RTCConfiguration(
