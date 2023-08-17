@@ -32,9 +32,6 @@ def process(image):
                 x = landmark.x
                 y = landmark.y
                 z = landmark.z
-    
-                points.append((x, y, z))
-                print ("No.%d, (%f, %f, %f)" % (i, x, y, z))
                 
                 x = int(x * image_width)
                 y = int(y * image_height)
