@@ -24,19 +24,19 @@ def process(image):
         min_detection_confidence=detection_confidence
     ) as face_mesh:
 
-    results = face_mesh.process(image)
-    out_image = image.copy()
-
-    for face_landmarks in results.multi_face_landmarks:
-        mp.solutions.drawing_utils.draw_landmarks(
-            image=out_image,
-            landmark_list=face_landmarks,
-            connections=mp.solutions.face_mesh.FACEMESH_CONTOURS,
-            landmark_drawing_spec=drawing_spec
-        )
-
-    return cv2.flip(image, 1)
-
+        results = face_mesh.process(image)
+        out_image = image.copy()
+    
+        for face_landmarks in results.multi_face_landmarks:
+            mp.solutions.drawing_utils.draw_landmarks(
+                image=out_image,
+                landmark_list=face_landmarks,
+                connections=mp.solutions.face_mesh.FACEMESH_CONTOURS,
+                landmark_drawing_spec=drawing_spec
+            )
+    
+        return cv2.flip(image, 1)
+    
 RTC_CONFIGURATION = RTCConfiguration(
     {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
 )
