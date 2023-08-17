@@ -41,12 +41,13 @@ RTC_CONFIGURATION = RTCConfiguration(
 
 class VideoProcessor:
     def __init__(self) -> None:
-        self.test_state = None
+        self.is_image = True
+        self.is_image = True
         
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
 
-        img = process(img, is_image, is_landmarks)
+        img = process(img, self.is_image, self.is_landmarks)
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
