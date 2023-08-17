@@ -5,6 +5,12 @@ import mediapipe as mp
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 
 mp_face_mesh = mp.solutions.face_mesh
+face_mesh = mp_face_mesh.FaceMesh(
+    static_image_mode=True,
+    refine_landmarks=True,
+    max_num_faces=1,
+    min_detection_confidence=0.5
+)
 
 """
 mp_drawing = mp.solutions.drawing_utils
@@ -29,33 +35,25 @@ def process(image):
     image.flags.writeable = False
     #results = holistic.process(image)
     #results = hands.process(image)
+    results = face_mesh.process(image)
     
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+   
+    for face in results.multi_face_landmarks:
+       for i, landmark in enumerate(face.landmark):
+            # 特徴点の座標の取得
+            x = landmark.x
+            y = landmark.y
+            z = landmark.z
 
-    with mp_face_mesh.FaceMesh(
-        static_image_mode=True,
-        refine_landmarks=True,
-        max_num_faces=1,
-        min_detection_confidence=0.5) as face_mesh:
-    
-        # Convert the BGR image to RGB and process it with MediaPipe Face Mesh.
-        results = face_mesh.process(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-    
-        for face in results.multi_face_landmarks:
-           for i, landmark in enumerate(face.landmark):
-                # 特徴点の座標の取得
-                x = landmark.x
-                y = landmark.y
-                z = landmark.z
-    
-                points.append((x, y, z))
-                #print ("No.%d, (%f, %f, %f)" % (i, x, y, z))
-                
-                x = int(x * image_width)
-                y = int(y * image_height)
-                cv2.circle(image, center=(x, y), radius=3, color=(0, 0, 255), thickness=-1)
-                cv2.circle(image, center=(x, y), radius=2, color=(255, 255, 255), thickness=-1)
+            points.append((x, y, z))
+            print ("No.%d, (%f, %f, %f)" % (i, x, y, z))
+            
+            x = int(x * image_width)
+            y = int(y * image_height)
+            cv2.circle(image, center=(x, y), radius=3, color=(0, 0, 255), thickness=-1)
+            cv2.circle(image, center=(x, y), radius=2, color=(255, 255, 255), thickness=-1)
            
     #mp_drawing.draw_landmarks(
     #    image, results.face_landmarks, mp_holistic.FACE_CONNECTIONS)
