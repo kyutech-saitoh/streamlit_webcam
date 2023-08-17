@@ -15,10 +15,19 @@ def process(image, is_image, is_landmarks):
     ) as face_mesh:
 
         all_left_eye_idxs = list(mp.solutions.face_mesh.FACEMESH_LEFT_EYE)
-        all_left_eye_idxs = set(np.ravel(all_left_eye_idxs)) 
+        all_left_eye_idxs = set(np.ravel(all_left_eye_idxs))
         all_right_eye_idxs = list(mp.solutions.face_mesh.FACEMESH_RIGHT_EYE)
-        all_right_eye_idxs = set(np.ravel(all_right_eye_idxs))       
+        all_right_eye_idxs = set(np.ravel(all_right_eye_idxs))
+        all_left_brow_idxs = list(mp.solutions.face_mesh.FACEMESH_LEFT_EYEBROW)
+        all_left_brow_idxs = set(np.ravel(all_left_brow_idxs))
+        all_right_brow_idxs = list(mp.solutions.face_mesh.FACEMESH_RIGHT_EYEBROW)
+        all_right_brow_idxs = set(np.ravel(all_right_brow_idxs))
+        all_lip_idxs = list(mp.solutions.face_mesh.FACEMESH_LIPS)
+        all_lip_idxs = set(np.ravel(all_lip_idxs))
         all_idxs = all_left_eye_idxs.union(all_right_eye_idxs)
+        all_idxs = all_idxs.union(all_left_brow_idxs)
+        all_idxs = all_idxs.union(all_right_brow_idxs)
+        all_idxs = all_idxs.union(all_lip_idxs)
 
 
         results = face_mesh.process(image)
@@ -37,7 +46,7 @@ def process(image, is_image, is_landmarks):
                    for landmark in face.landmark:               
                         x = int(landmark.x * image_width)
                         y = int(landmark.y * image_height)
-                        cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
+                        cv2.circle(out_image, center=(x, y), radius=2, color=(0, 255, 0), thickness=-1)
                         cv2.circle(out_image, center=(x, y), radius=1, color=(255, 255, 255), thickness=-1)    
 
         if results.multi_face_landmarks:
@@ -49,8 +58,9 @@ def process(image, is_image, is_landmarks):
                     y = int(y * image_height)
 
                     if idx in all_idxs:
-                        cv2.circle(out_image, center=(x, y), radius=2, color=(255, 0, 255), thickness=-1)
-                        cv2.circle(out_image, center=(x, y), radius=1, color=(255, 255, 255), thickness=-1)    
+                        cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
+                    else:
+                        cv2.circle(out_image, center=(x, y), radius=1, color=(128, 128, 128), thickness=-1)    
         
     return cv2.flip(out_image, 1)
     
