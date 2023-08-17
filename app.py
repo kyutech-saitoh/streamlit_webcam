@@ -57,7 +57,7 @@ def process(image):
         static_image_mode=True,
         max_num_faces=1,
         min_detection_confidence=0.5) as face_mesh:
-    results = face_mesh.process(image)
+        results = face_mesh.process(image)
         
     if results.multi_face_landmarks:
         for face_landmarks in results.multi_face_landmarks:
