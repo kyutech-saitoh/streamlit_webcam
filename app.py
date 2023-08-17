@@ -19,9 +19,9 @@ def process(image):
     
     
     with mp.solutions.face_mesh.FaceMesh(
-        static_image_mode=True, #Set of unrelated images
-        max_num_faces=max_faces,
-        min_detection_confidence=detection_confidence
+        static_image_mode=True,
+        max_num_faces=1,
+        min_detection_confidence=0.5
     ) as face_mesh:
 
         results = face_mesh.process(image)
