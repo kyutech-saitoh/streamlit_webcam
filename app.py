@@ -1,9 +1,4 @@
 import streamlit as st
-
-import tempfile
-import time
-from PIL import Image
-
 import cv2
 import numpy as np
 import av
@@ -11,13 +6,13 @@ import mediapipe as mp
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 
 # Basic App Scaffolding
-st.title('Face Mesh App using Streamlit')
+#st.title('Face Mesh App using Streamlit')
 
 
 def process(image):
-    drawing_spec = mp.solutions.drawing_utils.DrawingSpec(thickness=2, circle_radius=1)
 
     """
+    drawing_spec = mp.solutions.drawing_utils.DrawingSpec(thickness=2, circle_radius=1)
     with mp.solutions.face_mesh.FaceMesh(
         static_image_mode=True,
         max_num_faces=5,
