@@ -31,8 +31,8 @@ hands = mp_hands.Hands(
 )
 
 def process(image):
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     image.flags.writeable = False
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     results = hands.process(image)
     """
     results = holistic.process(image)
