@@ -18,11 +18,11 @@ def process(image, is_image, is_landmarks):
 
         (image_height, image_width) = image.shape[:2]
 
-#        blank = np.zeros((image_height, image_width, 3))
-#        blank += 255
+        blank = np.zeros((image_height, image_width, 3))
+        blank += 255
 
 #        if is_blank == True:
-#        out_image = blank.copy()
+        out_image = blank.copy()
             
 #        if is_landmarks == True:
         if results.multi_face_landmarks:
