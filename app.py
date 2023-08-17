@@ -44,7 +44,7 @@ def process(image, is_image, is_landmarksA, is_landmarksB, pattern_landmarks):
         if is_image == False:
             out_image = white_image.copy()
 
-        if pattern_landmarks == 0:
+        if pattern_landmarks == "A":
             if results.multi_face_landmarks:
                 for face in results.multi_face_landmarks:
                    for landmark in face.landmark:               
@@ -52,7 +52,7 @@ def process(image, is_image, is_landmarksA, is_landmarksB, pattern_landmarks):
                         y = int(landmark.y * image_height)
                         cv2.circle(out_image, center=(x, y), radius=2, color=(0, 255, 0), thickness=-1)
                         cv2.circle(out_image, center=(x, y), radius=1, color=(255, 255, 255), thickness=-1)
-        elif pattern_landmarks == 1:
+        elif pattern_landmarks == "B":
             if results.multi_face_landmarks:
                 for face in results.multi_face_landmarks:
                     for idx in range(len(face.landmark)):
@@ -122,7 +122,7 @@ webrtc_ctx = webrtc_streamer(
 
 if webrtc_ctx.video_processor:
     webrtc_ctx.video_processor.is_image = st.checkbox("show camera image", value=True)
-    webrtc_ctx.video_processor.pattern_landmarks = st.radio("draw pattern", ["A", "B", "C"], index=0, horizontal=True)
+    webrtc_ctx.video_processor.pattern_landmarks = st.radio("draw pattern", ["A", "B", "C"], value="A", horizontal=True)
     webrtc_ctx.video_processor.is_landmarksA = st.checkbox("draw landmarks A", value=True)
     webrtc_ctx.video_processor.is_landmarksB = st.checkbox("draw landmarks B", value=False)
     
