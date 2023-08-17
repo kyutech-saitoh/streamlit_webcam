@@ -61,6 +61,6 @@ webrtc_ctx = webrtc_streamer(
 )
 
 if webrtc_ctx.video_processor:
-    webrtc_ctx.video_processor.is_image = st.checkbox("show camera image", value=False)
-    webrtc_ctx.video_processor.is_landmarks = st.checkbox("draw landmarks", value=False)
+    webrtc_ctx.video_processor.is_image = st.checkbox("show camera image", value=True)
+    webrtc_ctx.video_processor.is_landmarks = st.checkbox("draw landmarks", value=True)
     
