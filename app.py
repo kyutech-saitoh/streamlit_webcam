@@ -5,6 +5,18 @@ import av
 import mediapipe as mp
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 
+if st.checkbox("show camera image"):
+    is_blank = False
+else:
+    is_blank = True
+
+if st.checkbox("draw landmarks"):
+    is_landmarks = True
+else:
+    is_landmarks = False
+
+
+    
 def process(image):
     out_image = image.copy()
 
@@ -21,10 +33,10 @@ def process(image):
         blank = np.zeros((image_height, image_width, 3))
         blank += 255
 
-        if not st.checkbox("show camera image"):
+        if is_blank == True:
             out_image = blank.copy()
             
-        if st.checkbox("draw landmarks"):
+        if is_landmarks == True:
             if results.multi_face_landmarks:
                 for face in results.multi_face_landmarks:
                    for landmark in face.landmark:               
