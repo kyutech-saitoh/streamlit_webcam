@@ -33,6 +33,10 @@ def process(image, is_show_image, draw_pattern):
         all_idxs = all_idxs.union(all_right_brow_idxs)
         all_idxs = all_idxs.union(all_lip_idxs)
 
+        left_iris_idxs = list(mp.solutions.face_mesh.FACEMESH_LEFT_IRIS)
+        left_iris_idxs = set(np.ravel(left_iris_idxs))
+        right_iris_idxs = list(mp.solutions.face_mesh.FACEMESH_RIGHT_IRIS)
+        right_iris_idxs = set(np.ravel(right_iris_idxs))
 
         results = face_mesh.process(image)
 
@@ -66,7 +70,21 @@ def process(image, is_show_image, draw_pattern):
                             cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
                         else:
                             cv2.circle(out_image, center=(x, y), radius=1, color=(128, 128, 128), thickness=-1)    
-        
+
+        elif draw_pattern == "C":
+            if results.multi_face_landmarks:
+                for face in results.multi_face_landmarks:
+                    for idx in range(len(face.landmark)):
+                        x = face.landmark[idx].x
+                        y = face.landmark[idx].y
+                        x = int(x * image_width)
+                        y = int(y * image_height)
+    
+                        if idx == 468:
+                            cv2.circle(out_image, center=(x, y), radius=5, color=(200, 200, 255), thickness=-1)
+                        elif idx == 473:
+                            cv2.circle(out_image, center=(x, y), radius=5, color=(255, 200, 200), thickness=-1)    
+    
     return cv2.flip(out_image, 1)
     
 RTC_CONFIGURATION = RTCConfiguration(
@@ -96,5 +114,4 @@ webrtc_ctx = webrtc_streamer(
 
 if webrtc_ctx.video_processor:
     webrtc_ctx.video_processor.is_show_image = st.checkbox("show camera image", value=True)
-    webrtc_ctx.video_processor.draw_pattern = st.radio("draw pattern", ["A", "B", "None"], key="A", horizontal=True)
-    
+    webrtc_ctx.video_processor.draw_pattern = st.radio("draw pattern", ["A", "B", "C", "None"], key="A", horizontal=True)
