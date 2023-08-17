@@ -82,7 +82,7 @@ def process(image, is_show_image, draw_pattern):
     
                         if idx in left_iris_idxs:
                             cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
-                        if idx in rightt_iris_idxs:
+                        if idx in right_iris_idxs:
                             cv2.circle(out_image, center=(x, y), radius=2, color=(0, 255, 0), thickness=-1)    
     
     return cv2.flip(out_image, 1)
