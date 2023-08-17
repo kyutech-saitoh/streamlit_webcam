@@ -27,8 +27,7 @@ def process(image):
         (image_height, image_width) = image.shape[:2]
         
         for face in results.multi_face_landmarks:
-           for i, landmark in enumerate(face.landmark):
-                # 特徴点の座標の取得
+           for landmark in face.landmark:
                 x = landmark.x
                 y = landmark.y
                 z = landmark.z
