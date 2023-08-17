@@ -8,9 +8,8 @@ from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 mp_face_mesh = mp.solutions.face_mesh
 face_mesh = mp_face_mesh.FaceMesh(
     static_image_mode=True,
-    refine_landmarks=True,
-    max_num_faces=1,
-    min_detection_confidence=0.5
+    max_num_faces=5,
+    min_detection_confidence=0.1
 )
 
 def process(image):
