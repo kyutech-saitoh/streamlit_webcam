@@ -25,7 +25,9 @@ def process(image):
 
         results = face_mesh.process(image)
         out_image = image.copy()
-    
+
+        st.write("detected")
+
         for face_landmarks in results.multi_face_landmarks:
             mp.solutions.drawing_utils.draw_landmarks(
                 image=out_image,
