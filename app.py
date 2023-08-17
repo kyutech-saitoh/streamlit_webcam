@@ -38,6 +38,7 @@ def process(image):
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
+    st.write("check")
     print("check")
     #for face in results.multi_face_landmarks:
     #   for i, landmark in enumerate(face.landmark):
@@ -56,14 +57,14 @@ def process(image):
            
     #mp_drawing.draw_landmarks(
     #    image, results.face_landmarks, mp_holistic.FACE_CONNECTIONS)
-    mp_drawing.draw_landmarks(
-        image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
-    mp_drawing.draw_landmarks(
-        image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
+    #mp_drawing.draw_landmarks(
+    #    image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
+    #mp_drawing.draw_landmarks(
+    #    image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
     #mp_drawing.draw_landmarks(
     #    image, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS)
     
-    """
+    
     if results.multi_hand_landmarks:
       for hand_landmarks in results.multi_hand_landmarks:
         mp_drawing.draw_landmarks(
@@ -72,7 +73,6 @@ def process(image):
             mp_hands.HAND_CONNECTIONS,
             mp_drawing_styles.get_default_hand_landmarks_style(),
             mp_drawing_styles.get_default_hand_connections_style())
-    """
     
     return cv2.flip(image, 1)
 
