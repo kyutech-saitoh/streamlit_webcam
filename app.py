@@ -75,8 +75,8 @@ def process(image, is_show_image, draw_pattern):
         elif draw_pattern == "C":
             if results.multi_face_landmarks:
                 for face in results.multi_face_landmarks:
-                    dis1 = math.sqrt((face.landmark[133].x - face.landmark[33].x)**2 + (face.landmark[133].y - face.landmark[33].y)**2)
-                    dis2 = math.sqrt((face.landmark[362].x - face.landmark[263].x)**2 + (face.landmark[363].y - face.landmark[326].y)**2)
+                    dis1 = np.sqrt((face.landmark[133].x - face.landmark[33].x)**2 + (face.landmark[133].y - face.landmark[33].y)**2)
+                    dis2 = np.sqrt((face.landmark[362].x - face.landmark[263].x)**2 + (face.landmark[363].y - face.landmark[326].y)**2)
                     dis1 = int(dis1 * image_width)
                     dis2 = int(dis2 * image_height)
                     dis1_ = int(dis1 / 10)
