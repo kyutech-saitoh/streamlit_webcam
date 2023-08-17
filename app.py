@@ -14,7 +14,12 @@ def process(image, is_image, is_landmarks):
         min_detection_confidence=0.5
     ) as face_mesh:
 
-        left_eye_indexes = list(set(itertools.chain(*mp.solutions.face_mesh.FACEMESH_LEFT_EYE)))
+        all_left_eye_idxs = list(mp.solutions.face_mesh.FACEMESH_LEFT_EYE)
+        all_left_eye_idxs = set(np.ravel(all_left_eye_idxs)) 
+        all_right_eye_idxs = list(mp.solutions.face_mesh.FACEMESH_RIGHT_EYE)
+        all_right_eye_idxs = set(np.ravel(all_right_eye_idxs))       
+        all_idxs = all_left_eye_idxs.union(all_right_eye_idxs)
+
 
         results = face_mesh.process(image)
 
@@ -37,13 +42,14 @@ def process(image, is_image, is_landmarks):
 
         if results.multi_face_landmarks:
             for face in results.multi_face_landmarks:
-                for index in left_eye_indexes:
-                    x = face.landmark[index].x
-                    y = face.landmark[index].y
-                    x = int(landmark.x * image_width)
-                    y = int(landmark.y * image_height)
-                    cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
-                    cv2.circle(out_image, center=(x, y), radius=1, color=(255, 255, 255), thickness=-1)    
+                for landmark_idx, landmark in enumerate(face):
+                    if landmark_idx in all_idxs:
+                        x = face.landmark[landmark_idx].x
+                        y = face.landmark[landmark_idx].y
+                        x = int(landmark.x * image_width)
+                        y = int(landmark.y * image_height)
+                        cv2.circle(out_image, center=(x, y), radius=2, color=(255, 0, 255), thickness=-1)
+                        cv2.circle(out_image, center=(x, y), radius=1, color=(255, 255, 255), thickness=-1)    
     
     return cv2.flip(out_image, 1)
     
