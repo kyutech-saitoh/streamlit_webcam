@@ -87,6 +87,8 @@ RTC_CONFIGURATION = RTCConfiguration(
 
 class VideoProcessor:
     def recv(self, frame):
+        st.write("check0")
+        print("check0")
         img = frame.to_ndarray(format="bgr24")
 
         img = process(img)
