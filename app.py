@@ -43,13 +43,13 @@ def process(image, is_image, is_landmarks):
         if results.multi_face_landmarks:
             for face in results.multi_face_landmarks:
                 for landmark_idx in range(len(face)):
-                    if landmark_idx in all_idxs:
-                        x = face.landmark[landmark_idx].x
-                        y = face.landmark[landmark_idx].y
-                        x = int(x * image_width)
-                        y = int(y * image_height)
-                        cv2.circle(out_image, center=(x, y), radius=2, color=(255, 0, 255), thickness=-1)
-                        cv2.circle(out_image, center=(x, y), radius=1, color=(255, 255, 255), thickness=-1)    
+#                    if landmark_idx in all_idxs:
+                    x = face.landmark[landmark_idx].x
+                    y = face.landmark[landmark_idx].y
+                    x = int(x * image_width)
+                    y = int(y * image_height)
+                    cv2.circle(out_image, center=(x, y), radius=2, color=(255, 0, 255), thickness=-1)
+                    cv2.circle(out_image, center=(x, y), radius=1, color=(255, 255, 255), thickness=-1)    
     
     return cv2.flip(out_image, 1)
     
