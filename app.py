@@ -4,20 +4,8 @@ import numpy as np
 import av
 import mediapipe as mp
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
-
-if st.checkbox("show camera image"):
-    is_blank = False
-else:
-    is_blank = True
-
-if st.checkbox("draw landmarks"):
-    is_landmarks = True
-else:
-    is_landmarks = False
-
-
     
-def process(image):
+def process(image, is_image, is_landmarks):
     out_image = image.copy()
 
     with mp.solutions.face_mesh.FaceMesh(
@@ -52,18 +40,26 @@ RTC_CONFIGURATION = RTCConfiguration(
 )
 
 class VideoProcessor:
+    def __init__(self) -> None:
+        self.test_state = None
+        
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
 
-        img = process(img)
+        img = process(img, is_image, is_landmarks)
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
 webrtc_ctx = webrtc_streamer(
-    key="WYH",
+    key="example",
     mode=WebRtcMode.SENDRECV,
     rtc_configuration=RTC_CONFIGURATION,
     media_stream_constraints={"video": True, "audio": False},
     video_processor_factory=VideoProcessor,
     async_processing=True,
 )
+
+if webrtc_ctx.video_processor:
+    webrtc_ctx.video_processor.is_image = st.checkbox("show camera image")
+    webrtc_ctx.video_processor.is_landmarks = st.checkbox("draw landmarks")
+    
