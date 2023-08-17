@@ -16,7 +16,8 @@ st.title('Face Mesh App using Streamlit')
 
 def process(image):
     drawing_spec = mp.solutions.drawing_utils.DrawingSpec(thickness=2, circle_radius=1)
-    
+
+    """
     with mp.solutions.face_mesh.FaceMesh(
         static_image_mode=True,
         max_num_faces=5,
@@ -35,6 +36,7 @@ def process(image):
                 connections=mp.solutions.face_mesh.FACEMESH_CONTOURS,
                 landmark_drawing_spec=drawing_spec
             )
+    """
     
     return cv2.flip(image, 1)
     
