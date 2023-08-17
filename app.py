@@ -79,8 +79,8 @@ def process(image, is_show_image, draw_pattern):
                     dis2 = np.sqrt((face.landmark[362].x - face.landmark[263].x)**2 + (face.landmark[363].y - face.landmark[326].y)**2)
                     dis1 = int(dis1 * image_width)
                     dis2 = int(dis2 * image_height)
-                    dis1_ = int(dis1 / 10)
-                    dis2_ = int(dis2 / 10)
+                    dis1_ = int(dis1 / 5)
+                    dis2_ = int(dis2 / 5)
 
                     x1 = face.landmark[468].x
                     y1 = face.landmark[468].y
@@ -92,9 +92,9 @@ def process(image, is_show_image, draw_pattern):
                     x2 = int(x2 * image_width)
                     y2 = int(y2 * image_height)
 
-                    cv2.circle(out_image, center=(x1, y1), radius=dis1, color=(200, 200, 255), thickness=-1)
+                    cv2.circle(out_image, center=(x1, y1), radius=dis1, color=(250, 250, 255), thickness=-1)
                     cv2.circle(out_image, center=(x1, y1), radius=dis1_, color=(0, 0, 0), thickness=-1)
-                    cv2.circle(out_image, center=(x2, y2), radius=dis2, color=(255, 200, 200), thickness=-1)
+                    cv2.circle(out_image, center=(x2, y2), radius=dis2, color=(255, 250, 250), thickness=-1)
                     cv2.circle(out_image, center=(x2, y2), radius=dis2_, color=(0, 0, 0), thickness=-1)
                     
 #                        if idx in left_iris_idxs:
