@@ -44,7 +44,7 @@ def process(image, is_show_image, draw_pattern):
         if is_show_image == False:
             out_image = white_image.copy()
 
-        if pattern_landmarks == "A":
+        if draw_pattern == "A":
             if results.multi_face_landmarks:
                 for face in results.multi_face_landmarks:
                    for landmark in face.landmark:               
@@ -53,7 +53,7 @@ def process(image, is_show_image, draw_pattern):
                         cv2.circle(out_image, center=(x, y), radius=2, color=(0, 255, 0), thickness=-1)
                         cv2.circle(out_image, center=(x, y), radius=1, color=(255, 255, 255), thickness=-1)
 
-        elif pattern_landmarks == "B":
+        elif draw_pattern == "B":
             if results.multi_face_landmarks:
                 for face in results.multi_face_landmarks:
                     for idx in range(len(face.landmark)):
