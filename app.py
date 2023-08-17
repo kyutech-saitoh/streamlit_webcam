@@ -10,9 +10,9 @@ from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 
 
 def process(image):
+    drawing_spec = mp.solutions.drawing_utils.DrawingSpec(thickness=2, circle_radius=1)
 
     """
-    drawing_spec = mp.solutions.drawing_utils.DrawingSpec(thickness=2, circle_radius=1)
     with mp.solutions.face_mesh.FaceMesh(
         static_image_mode=True,
         max_num_faces=5,
