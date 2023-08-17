@@ -5,29 +5,25 @@ import av
 import mediapipe as mp
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 
-# Basic App Scaffolding
-#st.title('Face Mesh App using Streamlit')
-
+mp_face_mesh = mp.solutions.face_mesh
+face_mesh = mp_face_mesh.FaceMesh(
+    static_image_mode=True,
+    refine_landmarks=True,
+    max_num_faces=1,
+    min_detection_confidence=0.5
+)
 
 def process(image):
-    #drawing_spec = mp.solutions.drawing_utils.DrawingSpec(thickness=2, circle_radius=1)
-
     out_image = image.copy()
 
-    with mp.solutions.face_mesh.FaceMesh(
-        static_image_mode=True,
-        max_num_faces=5,
-        min_detection_confidence=0.1
-    ) as face_mesh:
+    results = face_mesh.process(image)
 
-        results = face_mesh.process(image)
-
-        for face_landmarks in results.multi_face_landmarks:
-            mp.solutions.drawing_utils.draw_landmarks(
-                image=out_image,
-                landmark_list=face_landmarks,
-                connections=mp.solutions.face_mesh.FACEMESH_CONTOURS
-            )
+    for face_landmarks in results.multi_face_landmarks:
+        mp.solutions.drawing_utils.draw_landmarks(
+            image=out_image,
+            landmark_list=face_landmarks,
+            connections=mp.solutions.face_mesh.FACEMESH_CONTOURS
+        )
     
     return cv2.flip(out_image, 1)
     
