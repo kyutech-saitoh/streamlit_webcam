@@ -8,7 +8,7 @@ from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 st.title("Streamlit App Test (MediaPipe)")
 st.write("Saitoh-lab @ Kyutech")
 
-def process(image, is_image, is_landmarksA, is_landmarksB, pattern_landmarks):
+def process(image, is_show_image, draw_pattern):
     out_image = image.copy()
 
     with mp.solutions.face_mesh.FaceMesh(
@@ -41,7 +41,7 @@ def process(image, is_image, is_landmarksA, is_landmarksB, pattern_landmarks):
         black_image = np.zeros((image_height, image_width, 3), np.uint8)
         white_image = black_image + 255
 
-        if is_image == False:
+        if is_show_image == False:
             out_image = white_image.copy()
 
         if pattern_landmarks == "A":
@@ -52,6 +52,7 @@ def process(image, is_image, is_landmarksA, is_landmarksB, pattern_landmarks):
                         y = int(landmark.y * image_height)
                         cv2.circle(out_image, center=(x, y), radius=2, color=(0, 255, 0), thickness=-1)
                         cv2.circle(out_image, center=(x, y), radius=1, color=(255, 255, 255), thickness=-1)
+
         elif pattern_landmarks == "B":
             if results.multi_face_landmarks:
                 for face in results.multi_face_landmarks:
@@ -65,31 +66,6 @@ def process(image, is_image, is_landmarksA, is_landmarksB, pattern_landmarks):
                             cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
                         else:
                             cv2.circle(out_image, center=(x, y), radius=1, color=(128, 128, 128), thickness=-1)    
-
-        """
-        if is_landmarksA == True:
-            if results.multi_face_landmarks:
-                for face in results.multi_face_landmarks:
-                   for landmark in face.landmark:               
-                        x = int(landmark.x * image_width)
-                        y = int(landmark.y * image_height)
-                        cv2.circle(out_image, center=(x, y), radius=2, color=(0, 255, 0), thickness=-1)
-                        cv2.circle(out_image, center=(x, y), radius=1, color=(255, 255, 255), thickness=-1)    
-
-        if is_landmarksB == True:
-            if results.multi_face_landmarks:
-                for face in results.multi_face_landmarks:
-                    for idx in range(len(face.landmark)):
-                        x = face.landmark[idx].x
-                        y = face.landmark[idx].y
-                        x = int(x * image_width)
-                        y = int(y * image_height)
-    
-                        if idx in all_idxs:
-                            cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
-                        else:
-                            cv2.circle(out_image, center=(x, y), radius=1, color=(128, 128, 128), thickness=-1)    
-        """
         
     return cv2.flip(out_image, 1)
     
@@ -99,15 +75,13 @@ RTC_CONFIGURATION = RTCConfiguration(
 
 class VideoProcessor:
     def __init__(self) -> None:
-        self.is_image = True
-        self.is_landmarksA = True
-        self.is_landmarksB = False
-        self.pattern_landmarks = 0
-        
+        self.is_show_image = True
+        self.draw_pattern = "A"
+
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
 
-        img = process(img, self.is_image, self.is_landmarksA, self.is_landmarksB, self.pattern_landmarks)
+        img = process(img, self.is_show_image, self.draw_pattern)
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
@@ -121,8 +95,6 @@ webrtc_ctx = webrtc_streamer(
 )
 
 if webrtc_ctx.video_processor:
-    webrtc_ctx.video_processor.is_image = st.checkbox("show camera image", value=True)
-    webrtc_ctx.video_processor.pattern_landmarks = st.radio("draw pattern", ["A", "B", "C"], key="A", horizontal=True)
-    webrtc_ctx.video_processor.is_landmarksA = st.checkbox("draw landmarks A", value=True)
-    webrtc_ctx.video_processor.is_landmarksB = st.checkbox("draw landmarks B", value=False)
+    webrtc_ctx.video_processor.is_show_image = st.checkbox("show camera image", value=True)
+    webrtc_ctx.video_processor.draw_pattern = st.radio("draw pattern", ["A", "B", "None"], key="A", horizontal=True)
     
