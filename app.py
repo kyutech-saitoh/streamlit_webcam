@@ -24,14 +24,6 @@ def process(image):
                 connections=mp.solutions.face_mesh.FACEMESH_CONTOURS
             )
         """
-        (image_height, image_width) = image.shape[:2]
-        
-        for face in results.multi_face_landmarks:
-           for landmark in face.landmark:               
-                x = int(landmark.x * image_width)
-                y = int(landmark.y * image_height)
-                cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
-                cv2.circle(out_image, center=(x, y), radius=1, color=(255, 255, 255), thickness=-1)    
 
     return cv2.flip(out_image, 1)
     
