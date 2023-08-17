@@ -48,9 +48,7 @@ class VideoProcessor:
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
 
-        st.write("check1")
         img = process(img)
-        st.write("check2")
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
