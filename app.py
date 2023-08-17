@@ -25,13 +25,12 @@ face_mesh = mp_face_mesh.FaceMesh(
 def process(image):
     image.flags.writeable = False
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    #results = hands.process(image)
-    results = face_mesh.process(image)
+    results = hands.process(image)
+    #results = face_mesh.process(image)
 
     # Draw the hand annotations on the image.
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-    """
     if results.multi_hand_landmarks:
       for hand_landmarks in results.multi_hand_landmarks:
         mp_drawing.draw_landmarks(
@@ -40,15 +39,16 @@ def process(image):
             mp_hands.HAND_CONNECTIONS,
             mp_drawing_styles.get_default_hand_landmarks_style(),
             mp_drawing_styles.get_default_hand_connections_style())
-    """
 
+    """
     for face_landmarks in results.multi_face_landmarks:
         mp_drawing.draw_landmarks(
             image,
             face_landmarks,
             mp.solutions.face_mesh.FACE_CONNECTIONS,
             drawing_spec)
-
+    """
+    
     return cv2.flip(image, 1)
 
 
