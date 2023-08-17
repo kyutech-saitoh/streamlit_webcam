@@ -81,14 +81,14 @@ def process(image, is_show_image, draw_pattern):
                         x = int(x * image_width)
                         y = int(y * image_height)
     
-                        if idx in left_iris_idxs:
-                            cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
-                        if idx in right_iris_idxs:
-                            cv2.circle(out_image, center=(x, y), radius=2, color=(0, 255, 0), thickness=-1)    
+#                        if idx in left_iris_idxs:
+#                            cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
+#                        if idx in right_iris_idxs:
+#                            cv2.circle(out_image, center=(x, y), radius=2, color=(0, 255, 0), thickness=-1)    
                         if idx == 468:
-                            cv2.circle(out_image, center=(x, y), radius=5, color=(200, 200, 255), thickness=-1)
+                            cv2.circle(out_image, center=(x, y), radius=10, color=(100, 100, 255), thickness=-1)
                         if idx == 473:
-                            cv2.circle(out_image, center=(x, y), radius=5, color=(200, 255, 200), thickness=-1)
+                            cv2.circle(out_image, center=(x, y), radius=10, color=(100, 255, 100), thickness=-1)
     
     return cv2.flip(out_image, 1)
     
