@@ -39,15 +39,6 @@ def process(image):
             mp_hands.HAND_CONNECTIONS,
             mp_drawing_styles.get_default_hand_landmarks_style(),
             mp_drawing_styles.get_default_hand_connections_style())
-
-    """
-    for face_landmarks in results.multi_face_landmarks:
-        mp_drawing.draw_landmarks(
-            image,
-            face_landmarks,
-            mp.solutions.face_mesh.FACE_CONNECTIONS,
-            drawing_spec)
-    """
     
     return cv2.flip(image, 1)
 
