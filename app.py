@@ -12,7 +12,7 @@ hands = mp_hands.Hands(
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5
 )
-drawing_spec = mp.solutions.drawing_utils.DrawingSpec(thickness=2, circle_radius=1)
+drawing_spec = mp_drawing.DrawingSpec(thickness=2, circle_radius=1)
 
 mp_face_mesh = mp.solutions.face_mesh
 face_mesh = mp_face_mesh.FaceMesh(
@@ -48,7 +48,7 @@ def process(image):
             mp_drawing.draw_landmarks(
                 image,
                 face_landmarks,
-                mp.solutions.face_mesh.FACE_CONNECTIONS,
+                mp_face_mesh.FACE_CONNECTIONS,
                 drawing_spec,
                 drawing_spec
             )
