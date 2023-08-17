@@ -39,7 +39,8 @@ def process(image):
     
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-   
+
+    print("check")
     for face in results.multi_face_landmarks:
        for i, landmark in enumerate(face.landmark):
             # 特徴点の座標の取得
