@@ -28,7 +28,7 @@ def process(image, is_image, is_landmarks):
         black_image = np.zeros((image_height, image_width, 3), np.uint8)
         white_image = black_image + 255
 
-        if is_image == True:
+        if is_image == False:
             out_image = white_image.copy()
             
         if is_landmarks == True:
@@ -40,7 +40,15 @@ def process(image, is_image, is_landmarks):
                         cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
                         cv2.circle(out_image, center=(x, y), radius=1, color=(255, 255, 255), thickness=-1)    
 
-
+        if results.multi_face_landmarks:
+            for face in results.multi_face_landmarks:
+                for landmark_idx in range(len(face.landmark)):
+                    x = face.landmark[landmark_idx].x
+                    y = face.landmark[landmark_idx].y
+                    x = int(x * image_width)
+                    y = int(y * image_height)
+                    cv2.circle(out_image, center=(x, y), radius=2, color=(255, 0, 255), thickness=-1)
+                    cv2.circle(out_image, center=(x, y), radius=1, color=(255, 255, 255), thickness=-1)    
     
     return cv2.flip(out_image, 1)
     
