@@ -75,20 +75,32 @@ def process(image, is_show_image, draw_pattern):
         elif draw_pattern == "C":
             if results.multi_face_landmarks:
                 for face in results.multi_face_landmarks:
-                    for idx in range(len(face.landmark)):
-                        x = face.landmark[idx].x
-                        y = face.landmark[idx].y
-                        x = int(x * image_width)
-                        y = int(y * image_height)
-    
+                    dis1 = math.sqrt((face.landmark[133].x - face.landmark[33].x)**2 + (face.landmark[133].y - face.landmark[33].y)**2)
+                    dis2 = math.sqrt((face.landmark[362].x - face.landmark[263].x)**2 + (face.landmark[363].y - face.landmark[326].y)**2)
+                    dis1 = int(dis1 * image_width)
+                    dis2 = int(dis2 * image_height)
+                    dis1_ = int(dis1 / 10)
+                    dis2_ = int(dis2 / 10)
+
+                    x1 = face.landmark[468].x
+                    y1 = face.landmark[468].y
+                    x1 = int(x1 * image_width)
+                    y1 = int(y1 * image_height)
+
+                    x2 = face.landmark[473].x
+                    y2 = face.landmark[473].y
+                    x2 = int(x2 * image_width)
+                    y2 = int(y2 * image_height)
+
+                    cv2.circle(out_image, center=(x1, y1), radius=dis1, color=(200, 200, 255), thickness=-1)
+                    cv2.circle(out_image, center=(x1, y1), radius=dis1_, color=(0, 0, 0), thickness=-1)
+                    cv2.circle(out_image, center=(x2, y2), radius=dis2, color=(255, 200, 200), thickness=-1)
+                    cv2.circle(out_image, center=(x2, y2), radius=dis2_, color=(0, 0, 0), thickness=-1)
+                    
 #                        if idx in left_iris_idxs:
 #                            cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
 #                        if idx in right_iris_idxs:
 #                            cv2.circle(out_image, center=(x, y), radius=2, color=(0, 255, 0), thickness=-1)    
-                        if idx == 468:
-                            cv2.circle(out_image, center=(x, y), radius=10, color=(100, 100, 255), thickness=-1)
-                        if idx == 473:
-                            cv2.circle(out_image, center=(x, y), radius=10, color=(100, 255, 100), thickness=-1)
     
     return cv2.flip(out_image, 1)
     
