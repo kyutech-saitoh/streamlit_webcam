@@ -17,11 +17,10 @@ st.title('Face Mesh App using Streamlit')
 def process(image):
     drawing_spec = mp.solutions.drawing_utils.DrawingSpec(thickness=2, circle_radius=1)
     
-    
     with mp.solutions.face_mesh.FaceMesh(
         static_image_mode=True,
-        max_num_faces=1,
-        min_detection_confidence=0.5
+        max_num_faces=5,
+        min_detection_confidence=0.1
     ) as face_mesh:
 
         results = face_mesh.process(image)
@@ -35,7 +34,7 @@ def process(image):
                 landmark_drawing_spec=drawing_spec
             )
     
-        return cv2.flip(image, 1)
+    return cv2.flip(image, 1)
     
 RTC_CONFIGURATION = RTCConfiguration(
     {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
