@@ -22,7 +22,7 @@ def process(image, is_image, is_landmarks):
         white_image = black_image + 255
 
         if is_blank == True:
-            out_image = white_image.copy()
+            out_image = black_image.copy()
             
         if is_landmarks == True:
             if results.multi_face_landmarks:
