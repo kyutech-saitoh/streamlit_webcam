@@ -4,7 +4,7 @@ import numpy as np
 import av
 import mediapipe as mp
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
-    
+
 def process(image, is_image, is_landmarks):
     out_image = image.copy()
 
@@ -13,7 +13,9 @@ def process(image, is_image, is_landmarks):
         max_num_faces=1,
         min_detection_confidence=0.5
     ) as face_mesh:
-        
+
+        left_eye_indexes = list(set(itertools.chain(*mp.solutions.face_mesh.FACEMESH_LEFT_EYE)))
+
         results = face_mesh.process(image)
 
         (image_height, image_width) = image.shape[:2]
@@ -22,7 +24,7 @@ def process(image, is_image, is_landmarks):
         white_image = black_image + 255
 
         if is_image == True:
-            out_image = black_image.copy()
+            out_image = white_image.copy()
             
         if is_landmarks == True:
             if results.multi_face_landmarks:
@@ -32,7 +34,17 @@ def process(image, is_image, is_landmarks):
                         y = int(landmark.y * image_height)
                         cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
                         cv2.circle(out_image, center=(x, y), radius=1, color=(255, 255, 255), thickness=-1)    
-               
+
+        if results.multi_face_landmarks:
+            for face in results.multi_face_landmarks:
+                for index in left_eye_indexes:
+                    x = face.landmark[index].x
+                    y = face.landmark[index].y
+                    x = int(landmark.x * image_width)
+                    y = int(landmark.y * image_height)
+                    cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
+                    cv2.circle(out_image, center=(x, y), radius=1, color=(255, 255, 255), thickness=-1)    
+    
     return cv2.flip(out_image, 1)
     
 RTC_CONFIGURATION = RTCConfiguration(
