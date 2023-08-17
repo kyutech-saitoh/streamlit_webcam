@@ -5,7 +5,7 @@ import av
 import mediapipe as mp
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 
-def process(image, is_image, is_landmarks):
+def process(image, is_image, is_landmarksA, is_landmarksB):
     out_image = image.copy()
 
     with mp.solutions.face_mesh.FaceMesh(
@@ -40,7 +40,7 @@ def process(image, is_image, is_landmarks):
         if is_image == False:
             out_image = white_image.copy()
             
-        if is_landmarks == True:
+        if is_landmarksA == True:
             if results.multi_face_landmarks:
                 for face in results.multi_face_landmarks:
                    for landmark in face.landmark:               
@@ -49,18 +49,19 @@ def process(image, is_image, is_landmarks):
                         cv2.circle(out_image, center=(x, y), radius=2, color=(0, 255, 0), thickness=-1)
                         cv2.circle(out_image, center=(x, y), radius=1, color=(255, 255, 255), thickness=-1)    
 
-        if results.multi_face_landmarks:
-            for face in results.multi_face_landmarks:
-                for idx in range(len(face.landmark)):
-                    x = face.landmark[idx].x
-                    y = face.landmark[idx].y
-                    x = int(x * image_width)
-                    y = int(y * image_height)
-
-                    if idx in all_idxs:
-                        cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
-                    else:
-                        cv2.circle(out_image, center=(x, y), radius=1, color=(128, 128, 128), thickness=-1)    
+        if is_landmarksB == True:
+            if results.multi_face_landmarks:
+                for face in results.multi_face_landmarks:
+                    for idx in range(len(face.landmark)):
+                        x = face.landmark[idx].x
+                        y = face.landmark[idx].y
+                        x = int(x * image_width)
+                        y = int(y * image_height)
+    
+                        if idx in all_idxs:
+                            cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
+                        else:
+                            cv2.circle(out_image, center=(x, y), radius=1, color=(128, 128, 128), thickness=-1)    
         
     return cv2.flip(out_image, 1)
     
@@ -71,12 +72,13 @@ RTC_CONFIGURATION = RTCConfiguration(
 class VideoProcessor:
     def __init__(self) -> None:
         self.is_image = True
-        self.is_landmarks = True
+        self.is_landmarksA = True
+        self.is_landmarksB = False
         
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
 
-        img = process(img, self.is_image, self.is_landmarks)
+        img = process(img, self.is_image, self.is_landmarksA, self.is_landmarksB)
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
@@ -91,5 +93,6 @@ webrtc_ctx = webrtc_streamer(
 
 if webrtc_ctx.video_processor:
     webrtc_ctx.video_processor.is_image = st.checkbox("show camera image", value=True)
-    webrtc_ctx.video_processor.is_landmarks = st.checkbox("draw landmarks", value=True)
+    webrtc_ctx.video_processor.is_landmarksA = st.checkbox("draw landmarks A", value=True)
+    webrtc_ctx.video_processor.is_landmarksB = st.checkbox("draw landmarks B", value=False)
     
