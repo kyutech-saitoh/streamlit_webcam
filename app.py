@@ -21,7 +21,7 @@ def process(image, is_image, is_landmarks):
         black_image = np.zeros((image_height, image_width, 3), np.uint8)
         white_image = black_image + 255
 
-        if is_blank == True:
+        if is_image == True:
             out_image = black_image.copy()
             
         if is_landmarks == True:
