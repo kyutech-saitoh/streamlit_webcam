@@ -122,7 +122,7 @@ webrtc_ctx = webrtc_streamer(
 
 if webrtc_ctx.video_processor:
     webrtc_ctx.video_processor.is_image = st.checkbox("show camera image", value=True)
-    webrtc_ctx.video_processor.pattern_landmarks = st.radio("draw pattern", ("A", "B", "C"), index=0, horizontal=True)
+    webrtc_ctx.video_processor.pattern_landmarks = st.radio("draw pattern", ["A", "B", "C"], index=0, horizontal=True)
     webrtc_ctx.video_processor.is_landmarksA = st.checkbox("draw landmarks A", value=True)
     webrtc_ctx.video_processor.is_landmarksB = st.checkbox("draw landmarks B", value=False)
     
