@@ -5,6 +5,8 @@ import av
 import mediapipe as mp
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 
+st.title("Streamlit App Test (MediaPipe)")
+
 def process(image, is_image, is_landmarksA, is_landmarksB):
     out_image = image.copy()
 
