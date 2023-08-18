@@ -75,7 +75,7 @@ def process(image, is_show_image, draw_pattern):
         (image_height, image_width) = image.shape[:2]
 
         black_image = np.zeros((image_height, image_width, 3), np.uint8)
-        white_image = black_image + (200, 200, 255)
+        white_image = black_image + 200
 
         if is_show_image == False:
             out_image = white_image.copy()
