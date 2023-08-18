@@ -117,14 +117,8 @@ def process(image, is_show_image, draw_pattern):
         elif draw_pattern == "C":
             if results.multi_face_landmarks:
                 for face in results.multi_face_landmarks:
-                    out_image = draw(out_image, face)
-
+                    out_image = draw(out_image, face) 
                     
-#                        if idx in left_iris_idxs:
-#                            cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
-#                        if idx in right_iris_idxs:
-#                            cv2.circle(out_image, center=(x, y), radius=2, color=(0, 255, 0), thickness=-1)    
-    
     return cv2.flip(out_image, 1)
     
 RTC_CONFIGURATION = RTCConfiguration(
