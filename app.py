@@ -8,6 +8,46 @@ from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 st.title("Streamlit App Test (MediaPipe)")
 st.write("Saitoh-lab @ Kyutech")
 
+def draw(out_image, face):
+    eye_width1 = np.sqrt((face.landmark[133].x - face.landmark[33].x)**2 + (face.landmark[133].y - face.landmark[33].y)**2)
+    eye_height1 = np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2)
+    eye_width2 = np.sqrt((face.landmark[362].x - face.landmark[263].x)**2 + (face.landmark[362].y - face.landmark[263].y)**2)
+    eye_height2 = np.sqrt((face.landmark[386].x - face.landmark[374].x)**2 + (face.landmark[386].y - face.landmark[374].y)**2)
+    eye_width1 = int(eye_width1 * image_width)
+    eye_height1 = int(eye_height1 * image_width)
+    eye_width2 = int(eye_width2 * image_height)
+    eye_height2 = int(eye_height2 * image_height)
+    
+    eye_center1x = (face.landmark[133].x + face.landmark[33].x + face.landmark[159].x + face.landmark[145].x) / 4
+    eye_center1y = (face.landmark[133].y + face.landmark[33].y + face.landmark[159].y + face.landmark[145].y) / 4
+    eye_center2x = (face.landmark[362].x + face.landmark[263].x + face.landmark[386].x + face.landmark[374].x) / 4
+    eye_center2y = (face.landmark[362].y + face.landmark[263].y + face.landmark[386].y + face.landmark[374].y) / 4
+    eye_center1x = int(eye_center1x * image_width)
+    eye_center1y = int(eye_center1y * image_width)
+    eye_center2x = int(eye_center2x * image_height)
+    eye_center2y = int(eye_center2y * image_height)
+
+    dis1_ = int(dis1 / 5)
+    dis2_ = int(dis2 / 5)
+    
+    x1 = face.landmark[468].x
+    y1 = face.landmark[468].y
+    x1 = int(x1 * image_width)
+    y1 = int(y1 * image_height)
+    
+    x2 = face.landmark[473].x
+    y2 = face.landmark[473].y
+    x2 = int(x2 * image_width)
+    y2 = int(y2 * image_height)
+    
+    cv2.ellipse(out_image, ((eye_center1x, eye_center1y), (eye_width1, eye_height1), 0), (200, 200, 255), -1)
+#    cv2.circle(out_image, center=(x1, y1), radius=dis1, color=(250, 250, 255), thickness=-1)
+#    cv2.circle(out_image, center=(x1, y1), radius=dis1_, color=(0, 0, 0), thickness=-1)
+    cv2.circle(out_image, center=(x2, y2), radius=dis2, color=(255, 250, 250), thickness=-1)
+    cv2.circle(out_image, center=(x2, y2), radius=dis2_, color=(0, 0, 0), thickness=-1)
+
+    return out_image
+    
 def process(image, is_show_image, draw_pattern):
     out_image = image.copy()
 
@@ -75,27 +115,8 @@ def process(image, is_show_image, draw_pattern):
         elif draw_pattern == "C":
             if results.multi_face_landmarks:
                 for face in results.multi_face_landmarks:
-                    dis1 = np.sqrt((face.landmark[133].x - face.landmark[33].x)**2 + (face.landmark[133].y - face.landmark[33].y)**2)
-                    dis2 = np.sqrt((face.landmark[362].x - face.landmark[263].x)**2 + (face.landmark[363].y - face.landmark[326].y)**2)
-                    dis1 = int(dis1 * image_width)
-                    dis2 = int(dis2 * image_height)
-                    dis1_ = int(dis1 / 5)
-                    dis2_ = int(dis2 / 5)
+                    out_image = draw(out_image, face)
 
-                    x1 = face.landmark[468].x
-                    y1 = face.landmark[468].y
-                    x1 = int(x1 * image_width)
-                    y1 = int(y1 * image_height)
-
-                    x2 = face.landmark[473].x
-                    y2 = face.landmark[473].y
-                    x2 = int(x2 * image_width)
-                    y2 = int(y2 * image_height)
-
-                    cv2.circle(out_image, center=(x1, y1), radius=dis1, color=(250, 250, 255), thickness=-1)
-                    cv2.circle(out_image, center=(x1, y1), radius=dis1_, color=(0, 0, 0), thickness=-1)
-                    cv2.circle(out_image, center=(x2, y2), radius=dis2, color=(255, 250, 250), thickness=-1)
-                    cv2.circle(out_image, center=(x2, y2), radius=dis2_, color=(0, 0, 0), thickness=-1)
                     
 #                        if idx in left_iris_idxs:
 #                            cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
