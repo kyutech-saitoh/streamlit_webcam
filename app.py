@@ -13,7 +13,8 @@ def func(value1, value2):
 
 
 def drawB(image, face, image_width, image_height):
-    left_eye_idxs = [133, 173, 157, 158, 159, 160, 161, 246, 33, 7, 163, 144, 145, 153, 154, 155, 133]
+    left_eye_idxs = [133, 173, 157, 158, 159]
+    #left_eye_idxs = [133, 173, 157, 158, 159, 160, 161, 246, 33, 7, 163, 144, 145, 153, 154, 155, 133]
     right_eye_idxs = [362, 398, 384, 385, 386, 387, 388, 466, 263, 249, 390, 373, 374, 380, 381, 382, 362]
     left_eyebrow_idxs = [55, 65, 52, 53, 46]
     right_eyebrow_idxs = [285, 295, 282, 283, 276]
@@ -29,6 +30,7 @@ def drawB(image, face, image_width, image_height):
 
         cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(255, 0, 0), thickness=2)
 
+    """
     for i in range(len(right_eye_idxs)-1):
         idx1 = right_eye_idxs[i]
         idx2 = right_eye_idxs[i+1]
@@ -68,7 +70,8 @@ def drawB(image, face, image_width, image_height):
         y2 = func(face.landmark[idx2].y, image_height)
 
         cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(0, 0, 255), thickness=2)
-
+    """
+    
     return image
     
 
@@ -169,19 +172,6 @@ def process(image, is_show_image, draw_pattern):
                 for face in results.multi_face_landmarks:
                     out_image = drawB(out_image, face, image_width, image_height) 
 
-                    """
-                    for idx in range(len(face.landmark)):
-                        x = face.landmark[idx].x
-                        y = face.landmark[idx].y
-                        x = int(x * image_width)
-                        y = int(y * image_height)
-    
-                        if idx in all_idxs:
-                            cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
-                        else:
-                            cv2.circle(out_image, center=(x, y), radius=1, color=(128, 128, 128), thickness=-1)
-                    """
-
         elif draw_pattern == "C":
             if results.multi_face_landmarks:
                 for face in results.multi_face_landmarks:
@@ -214,7 +204,7 @@ webrtc_ctx = webrtc_streamer(
     rtc_configuration=RTC_CONFIGURATION,
     media_stream_constraints={"video": True, "audio": False},
     video_processor_factory=VideoProcessor,
-    async_processing=False,
+    async_processing=True,
 )
 
 
