@@ -18,10 +18,10 @@ def drawB(image, face, image_width, image_height):
     contours = []
     contour = []
     for i in range(len(left_eye_idxs)):
-        #idx1 = left_eye_idxs[i]
-        #idx2 = left_eye_idxs[i+1]
-        idx1 = i
-        idx2 = i + 1
+        idx1 = int(left_eye_idxs[i])
+        idx2 = int(left_eye_idxs[i+1])
+        #idx1 = i
+        #idx2 = i + 1
         x1 = func(face.landmark[idx1].x, image_width)
         y1 = func(face.landmark[idx1].y, image_height)
         x2 = func(face.landmark[idx2].x, image_width)
