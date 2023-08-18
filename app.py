@@ -5,12 +5,13 @@ import av
 import mediapipe as mp
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 
-st.title("Streamlit App Test (MediaPipe)")
-st.write("Saitoh-lab @ Kyutech")
+st.title("Streamlit App: Face motion by MediaPipe")
+st.write("Kyutech, Saitoh-lab")
 
 def func(value1, value2):
     return int(value1 * value2)
-    
+
+
 def draw(image, face, image_width, image_height):
     eye_width1 = func(np.sqrt((face.landmark[133].x - face.landmark[33].x)**2 + (face.landmark[133].y - face.landmark[33].y)**2) * 2, image_width)
     eye_height1 = func(np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2) * 3, image_height)
@@ -49,7 +50,8 @@ def draw(image, face, image_width, image_height):
     cv2.ellipse(image, ((lip_centerx, lip_centery), (lip_width, lip_height), lip_angle), (150, 150, 255), -1)
     
     return image
-    
+
+
 def process(image, is_show_image, draw_pattern):
     out_image = image.copy()
 
@@ -118,12 +120,14 @@ def process(image, is_show_image, draw_pattern):
             if results.multi_face_landmarks:
                 for face in results.multi_face_landmarks:
                     out_image = draw(out_image, face, image_width, image_height) 
-                    
+
     return cv2.flip(out_image, 1)
-    
+
+
 RTC_CONFIGURATION = RTCConfiguration(
     {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
 )
+
 
 class VideoProcessor:
     def __init__(self) -> None:
@@ -137,6 +141,7 @@ class VideoProcessor:
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
+
 webrtc_ctx = webrtc_streamer(
     key="example",
     mode=WebRtcMode.SENDRECV,
@@ -145,6 +150,7 @@ webrtc_ctx = webrtc_streamer(
     video_processor_factory=VideoProcessor,
     async_processing=True,
 )
+
 
 if webrtc_ctx.video_processor:
     webrtc_ctx.video_processor.is_show_image = st.checkbox("show camera image", value=True)
