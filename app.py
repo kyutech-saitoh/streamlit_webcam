@@ -8,7 +8,7 @@ from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 st.title("Streamlit App Test (MediaPipe)")
 st.write("Saitoh-lab @ Kyutech")
 
-def func(value1, value2)
+def func(value1, value2):
     return int(value1 * value2)
     
 def draw(image, face, image_width, image_height):
