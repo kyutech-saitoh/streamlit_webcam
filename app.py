@@ -15,7 +15,8 @@ def func(value1, value2):
 def drawB(image, face, image_width, image_height):
     left_eye_idxs = [133, 173, 157, 158, 159, 160, 161, 246, 33, 7, 163, 144, 145, 153, 154, 155, 133]
     right_eye_idxs = [362, 398, 384, 385, 386, 387, 388, 466, 263, 249, 390, 373, 374, 380, 381, 382, 362]
-    left_eyebrow_idxs = [55, 65, 52, 53, 46, 124]
+    left_eyebrow_idxs = [55, 65, 52, 53, 46]
+    right_eyebrow_idxs = [285, 295, 282, 283, 276]
     lip_idxs = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, 375, 321, 405, 314, 17, 84, 181, 91, 146, 61]
 
     for i in range(len(left_eye_idxs)-1):
@@ -47,7 +48,17 @@ def drawB(image, face, image_width, image_height):
         y2 = func(face.landmark[idx2].y, image_height)
 
         cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(255, 0, 0), thickness=2)
-    
+
+    for i in range(len(right_eyebrow_idxs)-1):
+        idx1 = int(right_eyebrow_idxs[i])
+        idx2 = int(right_eyebrow_idxs[i+1])
+        x1 = func(face.landmark[idx1].x, image_width)
+        y1 = func(face.landmark[idx1].y, image_height)
+        x2 = func(face.landmark[idx2].x, image_width)
+        y2 = func(face.landmark[idx2].y, image_height)
+
+        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(0, 255, 0), thickness=2)
+
     for i in range(len(lip_idxs)-1):
         idx1 = int(lip_idxs[i])
         idx2 = int(lip_idxs[i+1])
