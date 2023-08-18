@@ -13,8 +13,15 @@ def func(value1, value2):
 
 
 def drawB(image, face, image_width, image_height):
-    left_eye_idxs = [133, 173, 157, 158, 159, 160, 161, 246, 33, 7, 163, 144, 145, 153, 154, 155, 133]
+    left_eye_idxs = {133, 173, 157, 158, 159, 160, 161, 246, 33, 7, 163, 144, 145, 153, 154, 155, 133}
 
+    for idx in left_eye_idxs:
+        x1 = func(face.landmark[idx1].x, image_width)
+        y1 = func(face.landmark[idx1].y, image_height)
+
+        cv2.circle(image, (x1, y1), 2, color=(255, 255, 255), thickness=-1)
+
+    """
     contours = []
     contour = []
     for i in range(len(left_eye_idxs)):
@@ -36,6 +43,7 @@ def drawB(image, face, image_width, image_height):
 #    cv2.polylines(image, [contour], True, (0, 0, 255), 1)
 
 #    cv2.drawContours(image, contour, -1, (0, 0, 255), thickness=2)
+    """
     
     return image
     
