@@ -13,13 +13,13 @@ def func(value1, value2):
 
 
 def drawB(image, face, image_width, image_height):
+    """
     left_eye_idxs = [133, 173, 157, 158, 159, 160, 161, 246, 33, 7, 163, 144, 145, 153, 154, 155, 133]
     right_eye_idxs = [362, 398, 384, 385, 386, 387, 388, 466, 263, 249, 390, 373, 374, 380, 381, 382, 362]
     left_eyebrow_idxs = [55, 65, 52, 53, 46]
     right_eyebrow_idxs = [285, 295, 282, 283, 276]
     lip_idxs = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, 375, 321, 405, 314, 17, 84, 181, 91, 146, 61]
 
-    """
     for i in range(len(left_eye_idxs)-1):
         idx1 = left_eye_idxs[i]
         idx2 = left_eye_idxs[i+1]
