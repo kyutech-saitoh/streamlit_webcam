@@ -13,10 +13,10 @@ def draw(image, face, image_width, image_height):
     eye_height1 = np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2)
     eye_width2 = np.sqrt((face.landmark[362].x - face.landmark[263].x)**2 + (face.landmark[362].y - face.landmark[263].y)**2)
     eye_height2 = np.sqrt((face.landmark[386].x - face.landmark[374].x)**2 + (face.landmark[386].y - face.landmark[374].y)**2)
-    eye_width1 = int(eye_width1 * image_width * 1.2)
-    eye_height1 = int(eye_height1 * image_width * 1.2)
-    eye_width2 = int(eye_width2 * image_height * 1.2)
-    eye_height2 = int(eye_height2 * image_height * 1.2)
+    eye_width1 = int(eye_width1 * image_width * 2)
+    eye_height1 = int(eye_height1 * image_width * 2)
+    eye_width2 = int(eye_width2 * image_height * 2)
+    eye_height2 = int(eye_height2 * image_height * 2)
     
     eye_center1x = (face.landmark[133].x + face.landmark[33].x + face.landmark[159].x + face.landmark[145].x) / 4
     eye_center1y = (face.landmark[133].y + face.landmark[33].y + face.landmark[159].y + face.landmark[145].y) / 4
