@@ -26,7 +26,7 @@ def drawB(image, face, image_width, image_height):
 
 #    contours.append(contour)
 
-    cv2.polylines(image, [contour], True, (0, 0, 255), 1)
+    cv2.polylines(image, np.array(contour, np.int32), True, (0, 0, 255), 1)
 
 #    cv2.drawContours(image, contour, -1, (0, 0, 255), thickness=2)
     
