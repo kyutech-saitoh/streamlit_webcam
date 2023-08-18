@@ -31,8 +31,10 @@ def draw(image, face, image_width, image_height):
     pupil2x = func(face.landmark[473].x, image_width)
     pupil2y = func(face.landmark[473].y, image_height)
 
-    iris_size1 = func(np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2), image_width)
-    iris_size2 = int(iris_size1 / 2)
+    iris_size1a = func(np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2), image_width)
+    iris_size1b = int(iris_size1a / 2)
+    iris_size2a = func(np.sqrt((face.landmark[386].x - face.landmark[374].x)**2 + (face.landmark[386].y - face.landmark[374].y)**2), image_width)
+    iris_size2b = int(iris_size2a / 2)
 
     lip_width = func(np.sqrt((face.landmark[57].x - face.landmark[287].x)**2 + (face.landmark[57].y - face.landmark[287].y)**2), image_width)
     lip_height = func(np.sqrt((face.landmark[0].x - face.landmark[17].x)**2 + (face.landmark[0].y - face.landmark[17].y)**2), image_height)
@@ -42,10 +44,10 @@ def draw(image, face, image_width, image_height):
 
     cv2.ellipse(image, ((eye_center1x, eye_center1y), (eye_width1, eye_height1), eye_angle1), (255, 255, 255), -1)
     cv2.ellipse(image, ((eye_center2x, eye_center2y), (eye_width2, eye_height2), eye_angle2), (255, 255, 255), -1)
-    cv2.circle(image, center=(pupil1x, pupil1y), radius=iris_size1, color=(150, 150, 0), thickness=-1)
-    cv2.circle(image, center=(pupil1x, pupil1y), radius=iris_size2, color=(0, 0, 0), thickness=-1)
-    cv2.circle(image, center=(pupil2x, pupil2y), radius=iris_size1, color=(150, 150, 0), thickness=-1)
-    cv2.circle(image, center=(pupil2x, pupil2y), radius=iris_size2, color=(0, 0, 0), thickness=-1)
+    cv2.circle(image, center=(pupil1x, pupil1y), radius=iris_size1a, color=(150, 150, 0), thickness=-1)
+    cv2.circle(image, center=(pupil1x, pupil1y), radius=iris_size1b, color=(0, 0, 0), thickness=-1)
+    cv2.circle(image, center=(pupil2x, pupil2y), radius=iris_size2a, color=(150, 150, 0), thickness=-1)
+    cv2.circle(image, center=(pupil2x, pupil2y), radius=iris_size2b, color=(0, 0, 0), thickness=-1)
 
     cv2.ellipse(image, ((lip_centerx, lip_centery), (lip_width, lip_height), lip_angle), (150, 150, 255), -1)
     
