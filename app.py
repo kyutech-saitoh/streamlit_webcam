@@ -12,7 +12,23 @@ def func(value1, value2):
     return int(value1 * value2)
 
 
-def draw(image, face, image_width, image_height):
+def drawB(image, face, image_width, image_height):
+    all_left_eye_idxs = list(mp.solutions.face_mesh.FACEMESH_LEFT_EYE)
+    all_left_eye_idxs = set(np.ravel(all_left_eye_idxs))
+
+    contours = []
+    for idx in all_left_eye_idxs:
+        x = func(face.landmark[idx].x, image_width)
+        y = func(face.landmark[idx].y, image_height)
+
+        contours.attend((x, y))
+
+    cv2.drawContours(image, contours, -1, (0, 0, 255), thickness=2)
+    
+    return image
+    
+
+def drawC(image, face, image_width, image_height):
     eye_width1 = func(np.sqrt((face.landmark[133].x - face.landmark[33].x)**2 + (face.landmark[133].y - face.landmark[33].y)**2) * 2, image_width)
     eye_height1 = func(np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2) * 3, image_height)
     eye_width2 = func(np.sqrt((face.landmark[362].x - face.landmark[263].x)**2 + (face.landmark[362].y - face.landmark[263].y)**2) * 2, image_width)
@@ -107,6 +123,9 @@ def process(image, is_show_image, draw_pattern):
         elif draw_pattern == "B":
             if results.multi_face_landmarks:
                 for face in results.multi_face_landmarks:
+                    out_image = drawB(out_image, face, image_width, image_height) 
+
+                    """
                     for idx in range(len(face.landmark)):
                         x = face.landmark[idx].x
                         y = face.landmark[idx].y
@@ -116,12 +135,13 @@ def process(image, is_show_image, draw_pattern):
                         if idx in all_idxs:
                             cv2.circle(out_image, center=(x, y), radius=2, color=(0, 0, 255), thickness=-1)
                         else:
-                            cv2.circle(out_image, center=(x, y), radius=1, color=(128, 128, 128), thickness=-1)    
+                            cv2.circle(out_image, center=(x, y), radius=1, color=(128, 128, 128), thickness=-1)
+                    """
 
         elif draw_pattern == "C":
             if results.multi_face_landmarks:
                 for face in results.multi_face_landmarks:
-                    out_image = draw(out_image, face, image_width, image_height) 
+                    out_image = drawC(out_image, face, image_width, image_height) 
 
     return cv2.flip(out_image, 1)
 
@@ -156,4 +176,4 @@ webrtc_ctx = webrtc_streamer(
 
 if webrtc_ctx.video_processor:
     webrtc_ctx.video_processor.is_show_image = st.checkbox("show camera image", value=True)
-    webrtc_ctx.video_processor.draw_pattern = st.radio("draw pattern", ["A", "B", "C", "None"], key="A", horizontal=True)
+    webrtc_ctx.video_processor.draw_pattern = st.radio("select draw pattern", ["A", "B", "C", "None"], key="A", horizontal=True)
