@@ -23,7 +23,7 @@ def drawB(image, face, image_width, image_height):
         x2 = func(face.landmark[idx+1].x, image_width)
         y2 = func(face.landmark[idx+1].y, image_height)
 
-        cv2.line(image, (x1, y1), (x2, y2), color=(150, 150, 0), 1)
+        cv2.line(image, (x1, y1), (x2, y2), color=(150, 150, 0), thickness=1)
 #        cv2.circle(image, (x, y), 2, color=(150, 150, 0), thickness=-1)
 #        contour.append([x, y])
 
