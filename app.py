@@ -30,13 +30,20 @@ def draw(image, face, image_width, image_height):
     iris_size1 = func(np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2), image_width)
     iris_size2 = int(iris_size1 / 3)
 
-    cv2.ellipse(image, ((eye_center1x, eye_center1y), (eye_width1, eye_height1), 0), (200, 200, 200), -1)
-    cv2.ellipse(image, ((eye_center2x, eye_center2y), (eye_width2, eye_height2), 0), (200, 200, 200), -1)
-    cv2.circle(image, center=(pupil1x, pupil1y), radius=iris_size1, color=(150, 150, 150), thickness=-1)
+    lip_width = func(np.sqrt((face.landmark[57].x - face.landmark[287].x)**2 + (face.landmark[57].y - face.landmark[287].y)**2), image_width)
+    lip_height = func(np.sqrt((face.landmark[0].x - face.landmark[17].x)**2 + (face.landmark[0].y - face.landmark[17].y)**2), image_height)
+    lip_centerx = func((face.landmark[57].x + face.landmark[287].x + face.landmark[0].x + face.landmark[17].x) / 4, image_width)
+    lip_centery = func((face.landmark[57].y + face.landmark[287].y + face.landmark[0].y + face.landmark[17].y) / 4, image_height)
+
+    cv2.ellipse(image, ((eye_center1x, eye_center1y), (eye_width1, eye_height1), 0), (255, 255, 255), -1)
+    cv2.ellipse(image, ((eye_center2x, eye_center2y), (eye_width2, eye_height2), 0), (255, 255, 255), -1)
+    cv2.circle(image, center=(pupil1x, pupil1y), radius=iris_size1, color=(150, 150, 0), thickness=-1)
     cv2.circle(image, center=(pupil1x, pupil1y), radius=iris_size2, color=(0, 0, 0), thickness=-1)
-    cv2.circle(image, center=(pupil2x, pupil2y), radius=iris_size1, color=(150, 150, 150), thickness=-1)
+    cv2.circle(image, center=(pupil2x, pupil2y), radius=iris_size1, color=(150, 150, 0), thickness=-1)
     cv2.circle(image, center=(pupil2x, pupil2y), radius=iris_size2, color=(0, 0, 0), thickness=-1)
 
+    cv2.ellipse(image, ((lip_centerx, lip_centery), (lip_width, lip_height), 0), (150, 150, 255), -1)
+    
     return image
     
 def process(image, is_show_image, draw_pattern):
