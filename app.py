@@ -13,26 +13,21 @@ def func(value1, value2):
     
 def draw(image, face, image_width, image_height):
     eye_width1 = func(np.sqrt((face.landmark[133].x - face.landmark[33].x)**2 + (face.landmark[133].y - face.landmark[33].y)**2) * 2, image_width)
-    eye_height1 = func(np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2) * 2, image_height)
+    eye_height1 = func(np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2) * 3, image_height)
     eye_width2 = func(np.sqrt((face.landmark[362].x - face.landmark[263].x)**2 + (face.landmark[362].y - face.landmark[263].y)**2) * 2, image_width)
-    eye_height2 = func(np.sqrt((face.landmark[386].x - face.landmark[374].x)**2 + (face.landmark[386].y - face.landmark[374].y)**2) * 2, image_height)
+    eye_height2 = func(np.sqrt((face.landmark[386].x - face.landmark[374].x)**2 + (face.landmark[386].y - face.landmark[374].y)**2) * 3, image_height)
     
     eye_center1x = func((face.landmark[133].x + face.landmark[33].x + face.landmark[159].x + face.landmark[145].x) / 4, image_width)
     eye_center1y = func((face.landmark[133].y + face.landmark[33].y + face.landmark[159].y + face.landmark[145].y) / 4, image_height)
     eye_center2x = func((face.landmark[362].x + face.landmark[263].x + face.landmark[386].x + face.landmark[374].x) / 4, image_width)
     eye_center2y = func((face.landmark[362].y + face.landmark[263].y + face.landmark[386].y + face.landmark[374].y) / 4, image_height)
     
-    pupil1x = face.landmark[468].x
-    pupil1y = face.landmark[468].y
-    pupil2x = face.landmark[473].x
-    pupil2y = face.landmark[473].y
-    pupil1x = int(pupil1x * image_width)
-    pupil1y = int(pupil1y * image_height)
-    pupil2x = int(pupil2x * image_width)
-    pupil2y = int(pupil2y * image_height)
+    pupil1x = func(face.landmark[468].x, image_width)
+    pupil1y = func(face.landmark[468].y, image_height)
+    pupil2x = func(face.landmark[473].x, image_width)
+    pupil2y = func(face.landmark[473].y, image_height)
 
-    iris_size1 = np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2)
-    iris_size1 = int(iris_size1 * image_width)
+    iris_size1 = func(np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2), image_width)
     iris_size2 = int(iris_size1 / 3)
 
     cv2.ellipse(image, ((eye_center1x, eye_center1y), (eye_width1, eye_height1), 0), (200, 200, 200), -1)
@@ -80,7 +75,7 @@ def process(image, is_show_image, draw_pattern):
         (image_height, image_width) = image.shape[:2]
 
         black_image = np.zeros((image_height, image_width, 3), np.uint8)
-        white_image = black_image + 255
+        white_image = black_image + (200, 200, 255)
 
         if is_show_image == False:
             out_image = white_image.copy()
