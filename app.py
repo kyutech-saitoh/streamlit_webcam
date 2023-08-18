@@ -8,24 +8,19 @@ from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 st.title("Streamlit App Test (MediaPipe)")
 st.write("Saitoh-lab @ Kyutech")
 
-def draw(image, face, image_width, image_height):
-    eye_width1 = np.sqrt((face.landmark[133].x - face.landmark[33].x)**2 + (face.landmark[133].y - face.landmark[33].y)**2)
-    eye_height1 = np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2)
-    eye_width2 = np.sqrt((face.landmark[362].x - face.landmark[263].x)**2 + (face.landmark[362].y - face.landmark[263].y)**2)
-    eye_height2 = np.sqrt((face.landmark[386].x - face.landmark[374].x)**2 + (face.landmark[386].y - face.landmark[374].y)**2)
-    eye_width1 = int(eye_width1 * image_width * 2)
-    eye_height1 = int(eye_height1 * image_width * 2)
-    eye_width2 = int(eye_width2 * image_height * 2)
-    eye_height2 = int(eye_height2 * image_height * 2)
+def func(value1, value2)
+    return int(value1 * value2)
     
-    eye_center1x = (face.landmark[133].x + face.landmark[33].x + face.landmark[159].x + face.landmark[145].x) / 4
-    eye_center1y = (face.landmark[133].y + face.landmark[33].y + face.landmark[159].y + face.landmark[145].y) / 4
-    eye_center2x = (face.landmark[362].x + face.landmark[263].x + face.landmark[386].x + face.landmark[374].x) / 4
-    eye_center2y = (face.landmark[362].y + face.landmark[263].y + face.landmark[386].y + face.landmark[374].y) / 4
-    eye_center1x = int(eye_center1x * image_width)
-    eye_center1y = int(eye_center1y * image_height)
-    eye_center2x = int(eye_center2x * image_width )
-    eye_center2y = int(eye_center2y * image_height)
+def draw(image, face, image_width, image_height):
+    eye_width1 = func(np.sqrt((face.landmark[133].x - face.landmark[33].x)**2 + (face.landmark[133].y - face.landmark[33].y)**2) * 2, image_width)
+    eye_height1 = func(np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2) * 2, image_height)
+    eye_width2 = func(np.sqrt((face.landmark[362].x - face.landmark[263].x)**2 + (face.landmark[362].y - face.landmark[263].y)**2) * 2, image_width)
+    eye_height2 = func(np.sqrt((face.landmark[386].x - face.landmark[374].x)**2 + (face.landmark[386].y - face.landmark[374].y)**2) * 2, image_height)
+    
+    eye_center1x = func((face.landmark[133].x + face.landmark[33].x + face.landmark[159].x + face.landmark[145].x) / 4, image_width)
+    eye_center1y = func((face.landmark[133].y + face.landmark[33].y + face.landmark[159].y + face.landmark[145].y) / 4, image_height)
+    eye_center2x = func((face.landmark[362].x + face.landmark[263].x + face.landmark[386].x + face.landmark[374].x) / 4, image_width)
+    eye_center2y = func((face.landmark[362].y + face.landmark[263].y + face.landmark[386].y + face.landmark[374].y) / 4, image_height)
     
     pupil1x = face.landmark[468].x
     pupil1y = face.landmark[468].y
@@ -39,9 +34,9 @@ def draw(image, face, image_width, image_height):
     iris_size1 = np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2)
     iris_size1 = int(iris_size1 * image_width)
     iris_size2 = int(iris_size1 / 3)
-        
-    cv2.ellipse(image, ((eye_center1x, eye_center1y), (eye_width1, eye_height1), 0), (200, 200, 255), -1)
-    cv2.ellipse(image, ((eye_center2x, eye_center2y), (eye_width2, eye_height2), 0), (255, 200, 200), -1)
+
+    cv2.ellipse(image, ((eye_center1x, eye_center1y), (eye_width1, eye_height1), 0), (200, 200, 200), -1)
+    cv2.ellipse(image, ((eye_center2x, eye_center2y), (eye_width2, eye_height2), 0), (200, 200, 200), -1)
     cv2.circle(image, center=(pupil1x, pupil1y), radius=iris_size1, color=(150, 150, 150), thickness=-1)
     cv2.circle(image, center=(pupil1x, pupil1y), radius=iris_size2, color=(0, 0, 0), thickness=-1)
     cv2.circle(image, center=(pupil2x, pupil2y), radius=iris_size1, color=(150, 150, 150), thickness=-1)
