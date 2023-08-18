@@ -14,6 +14,7 @@ def func(value1, value2):
 
 def drawB(image, face, image_width, image_height):
     left_eye_idxs = [133, 173, 157, 158, 159, 160, 161, 246, 33, 7, 163, 144, 145, 153, 154, 155, 133]
+    right_eye_idxs = [362, 398, 384, 385, 386, 387, 388, 466, 263, 249, 390, 373, 374, 380, 381, 382, 362]
 
     for i in range(len(left_eye_idxs)-1):
         idx1 = int(left_eye_idxs[i])
@@ -23,15 +24,17 @@ def drawB(image, face, image_width, image_height):
         x2 = func(face.landmark[idx2].x, image_width)
         y2 = func(face.landmark[idx2].y, image_height)
 
-        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(150, 150, 0), thickness=1)
+        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(0, 0, 255), thickness=2)
 
-    contour = []
-    for idx in left_eye_idxs:
-        x = func(face.landmark[idx].x, image_width)
-        y = func(face.landmark[idx].y, image_height)
+    for i in range(len(right_eye_idxs)-1):
+        idx1 = int(left_eye_idxs[i])
+        idx2 = int(left_eye_idxs[i+1])
+        x1 = func(face.landmark[idx1].x, image_width)
+        y1 = func(face.landmark[idx1].y, image_height)
+        x2 = func(face.landmark[idx2].x, image_width)
+        y2 = func(face.landmark[idx2].y, image_height)
 
-        contour.append([x, y])
-    cv2.polylines(image, contour, True, (0, 0, 255), 1)
+        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(255, 0, 0), thickness=2)
 
     """
     contours = []
