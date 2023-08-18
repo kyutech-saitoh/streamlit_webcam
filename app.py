@@ -8,7 +8,7 @@ from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 st.title("Streamlit App Test (MediaPipe)")
 st.write("Saitoh-lab @ Kyutech")
 
-def draw(out_image, face):
+def draw(out_image, face, image_width, image_height):
     #eye_width1 = np.sqrt((face.landmark[133].x - face.landmark[33].x)**2 + (face.landmark[133].y - face.landmark[33].y)**2)
     #eye_height1 = np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2)
     #eye_width2 = np.sqrt((face.landmark[362].x - face.landmark[263].x)**2 + (face.landmark[362].y - face.landmark[263].y)**2)
@@ -117,7 +117,7 @@ def process(image, is_show_image, draw_pattern):
         elif draw_pattern == "C":
             if results.multi_face_landmarks:
                 for face in results.multi_face_landmarks:
-                    out_image = draw(out_image, face) 
+                    out_image = draw(out_image, face, image_width, image_height) 
                     
     return cv2.flip(out_image, 1)
     
