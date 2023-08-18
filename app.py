@@ -19,15 +19,17 @@ def drawB(image, face, image_width, image_height):
         x1 = func(face.landmark[idx].x, image_width)
         y1 = func(face.landmark[idx].y, image_height)
 
-#        cv2.circle(image, (x1, y1), 2, color=(255, 255, 255), thickness=-1)
+        cv2.circle(image, (x1, y1), 2, color=(255, 255, 255), thickness=-1)
 
-    for i in range(len(left_eye_idxs)):
-        idx1 = left_eye_idxs[i]
-
+    for i in range(len(left_eye_idxs)-1):
+        idx1 = int(left_eye_idxs[i])
+        idx2 = int(left_eye_idxs[i+1])
         x1 = func(face.landmark[idx1].x, image_width)
         y1 = func(face.landmark[idx1].y, image_height)
+        x2 = func(face.landmark[idx2].x, image_width)
+        y2 = func(face.landmark[idx2].y, image_height)
 
-        cv2.circle(image, (x1, y1), 2, color=(255, 255, 255), thickness=-1)
+        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(150, 150, 0), thickness=1)
 
     """
     contours = []
