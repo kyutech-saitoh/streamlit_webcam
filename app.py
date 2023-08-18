@@ -22,8 +22,8 @@ def drawB(image, face, image_width, image_height):
         cv2.circle(image, (x1, y1), 2, color=(255, 255, 255), thickness=-1)
 
     for i in range(len(left_eye_idxs)-1):
-        idx1 = int(left_eye_idxs[i])
-        idx2 = int(left_eye_idxs[i+1])
+        idx1 = left_eye_idxs[i]
+        idx2 = left_eye_idxs[i+1]
         x1 = func(face.landmark[idx1].x, image_width)
         y1 = func(face.landmark[idx1].y, image_height)
         x2 = func(face.landmark[idx2].x, image_width)
