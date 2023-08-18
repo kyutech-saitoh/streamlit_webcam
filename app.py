@@ -19,19 +19,17 @@ def drawB(image, face, image_width, image_height):
     right_eyebrow_idxs = [285, 295, 282, 283, 276]
     lip_idxs = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, 375, 321, 405, 314, 17, 84, 181, 91, 146, 61]
 
+    """
     for i in range(len(left_eye_idxs)-1):
         idx1 = left_eye_idxs[i]
         idx2 = left_eye_idxs[i+1]
-        """
         x1 = func(face.landmark[idx1].x, image_width)
         y1 = func(face.landmark[idx1].y, image_height)
         x2 = func(face.landmark[idx2].x, image_width)
         y2 = func(face.landmark[idx2].y, image_height)
 
         cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(255, 0, 0), thickness=2)
-        """
         
-    """
     for i in range(len(right_eye_idxs)-1):
         idx1 = right_eye_idxs[i]
         idx2 = right_eye_idxs[i+1]
