@@ -17,7 +17,7 @@ def drawB(image, face, image_width, image_height):
 
     contours = []
     contour = []
-    for idx in all_left_eye_idxs:
+    for idx in left_eye_idxs:
         x = func(face.landmark[idx].x, image_width)
         y = func(face.landmark[idx].y, image_height)
 
