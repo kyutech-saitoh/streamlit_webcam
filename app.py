@@ -32,11 +32,14 @@ def draw(out_image, face, image_width, image_height):
     dis1_ = int(dis1 / 5)
     dis2_ = int(dis2 / 5)
     
-    x1 = face.landmark[468].x
-    y1 = face.landmark[468].y
-    x1 = int(x1 * image_width)
-    y1 = int(y1 * image_height)
-    
+    pupil1x = face.landmark[468].x
+    pupil1y = face.landmark[468].y
+    pupil1x = int(pupil1x * image_width)
+    pupil1y = int(pupil1y * image_height)
+
+    iris_size1 = np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2)
+    iris_size1 = int(iris_size1 * image_width)
+    iris_size2 = int(iris_size1 / 3)
     x2 = face.landmark[473].x
     y2 = face.landmark[473].y
     x2 = int(x2 * image_width)
@@ -44,7 +47,8 @@ def draw(out_image, face, image_width, image_height):
     
     cv2.ellipse(out_image, ((eye_center1x, eye_center1y), (eye_width1, eye_height1), 0), (200, 200, 255), -1)
     cv2.ellipse(out_image, ((eye_center2x, eye_center2y), (eye_width2, eye_height2), 0), (255, 200, 200), -1)
-    #cv2.circle(out_image, center=(x1, y1), radius=dis1, color=(250, 250, 255), thickness=-1)
+    cv2.circle(out_image, center=(pupil1x, pupil1y), radius=iris_size1, color=(255, 255, 100), thickness=-1)
+    cv2.circle(out_image, center=(pupil1x, pupil1y), radius=iris_size2, color=(255, 255, 255), thickness=-1)
     #cv2.circle(out_image, center=(x1, y1), radius=dis1_, color=(0, 0, 0), thickness=-1)
     #cv2.circle(out_image, center=(x2, y2), radius=dis2, color=(255, 250, 250), thickness=-1)
     #cv2.circle(out_image, center=(x2, y2), radius=dis2_, color=(0, 0, 0), thickness=-1)
