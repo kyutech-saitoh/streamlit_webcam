@@ -13,8 +13,7 @@ def func(value1, value2):
 
 
 def drawB(image, face, image_width, image_height):
-    all_left_eye_idxs = list(mp.solutions.face_mesh.FACEMESH_LEFT_EYE)
-    all_left_eye_idxs = set(np.ravel(all_left_eye_idxs))
+    left_eye_idxs = {133, 173, 157, 158, 159, 160, 161, 246, 33, 7, 163, 144, 145, 153, 154, 155}
 
     contours = []
     contour = []
