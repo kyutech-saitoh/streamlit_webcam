@@ -29,45 +29,7 @@ def drawB(image, face, image_width, image_height):
 
         cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(255, 0, 0), thickness=2)
 
-    for i in range(len(right_eye_idxs)-1):
-        idx1 = int(right_eye_idxs[i])
-        idx2 = int(right_eye_idxs[i+1])
-        x1 = func(face.landmark[idx1].x, image_width)
-        y1 = func(face.landmark[idx1].y, image_height)
-        x2 = func(face.landmark[idx2].x, image_width)
-        y2 = func(face.landmark[idx2].y, image_height)
 
-        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(0, 255, 0), thickness=2)
-
-    for i in range(len(left_eyebrow_idxs)-1):
-        idx1 = int(left_eyebrow_idxs[i])
-        idx2 = int(left_eyebrow_idxs[i+1])
-        x1 = func(face.landmark[idx1].x, image_width)
-        y1 = func(face.landmark[idx1].y, image_height)
-        x2 = func(face.landmark[idx2].x, image_width)
-        y2 = func(face.landmark[idx2].y, image_height)
-
-        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(255, 0, 0), thickness=2)
-
-    for i in range(len(right_eyebrow_idxs)-1):
-        idx1 = int(right_eyebrow_idxs[i])
-        idx2 = int(right_eyebrow_idxs[i+1])
-        x1 = func(face.landmark[idx1].x, image_width)
-        y1 = func(face.landmark[idx1].y, image_height)
-        x2 = func(face.landmark[idx2].x, image_width)
-        y2 = func(face.landmark[idx2].y, image_height)
-
-        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(0, 255, 0), thickness=2)
-
-    for i in range(len(lip_idxs)-1):
-        idx1 = int(lip_idxs[i])
-        idx2 = int(lip_idxs[i+1])
-        x1 = func(face.landmark[idx1].x, image_width)
-        y1 = func(face.landmark[idx1].y, image_height)
-        x2 = func(face.landmark[idx2].x, image_width)
-        y2 = func(face.landmark[idx2].y, image_height)
-
-        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(0, 0, 255), thickness=2)
     
     return image
     
