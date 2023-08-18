@@ -17,8 +17,8 @@ def draw(image, face, image_width, image_height):
     eye_width2 = func(np.sqrt((face.landmark[362].x - face.landmark[263].x)**2 + (face.landmark[362].y - face.landmark[263].y)**2) * 2, image_width)
     eye_height2 = func(np.sqrt((face.landmark[386].x - face.landmark[374].x)**2 + (face.landmark[386].y - face.landmark[374].y)**2) * 3, image_height)
 
-    eye_angle1 = np.arctan2(face.landmark[133], face.landmark[33]) * 180 / np.pi
-    
+    eye_angle1 = np.arctan2(face.landmark[133].y - face.landmark[33].y, face.landmark[133].x - face.landmark[33].x) * 180 / np.pi
+
     eye_center1x = func((face.landmark[133].x + face.landmark[33].x + face.landmark[159].x + face.landmark[145].x) / 4, image_width)
     eye_center1y = func((face.landmark[133].y + face.landmark[33].y + face.landmark[159].y + face.landmark[145].y) / 4, image_height)
     eye_center2x = func((face.landmark[362].x + face.landmark[263].x + face.landmark[386].x + face.landmark[374].x) / 4, image_width)
