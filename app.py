@@ -15,12 +15,6 @@ def func(value1, value2):
 def drawB(image, face, image_width, image_height):
     left_eye_idxs = [133, 173, 157, 158, 159, 160, 161, 246, 33, 7, 163, 144, 145, 153, 154, 155, 133]
 
-    for idx in left_eye_idxs:
-        x1 = func(face.landmark[idx].x, image_width)
-        y1 = func(face.landmark[idx].y, image_height)
-
-        cv2.circle(image, (x1, y1), 2, color=(255, 255, 255), thickness=-1)
-
     for i in range(len(left_eye_idxs)-1):
         idx1 = int(left_eye_idxs[i])
         idx2 = int(left_eye_idxs[i+1])
@@ -31,6 +25,13 @@ def drawB(image, face, image_width, image_height):
 
         cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(150, 150, 0), thickness=1)
 
+    contour = []
+    for idx in left_eye_idxs:
+        x = func(face.landmark[idx].x, image_width)
+        y = func(face.landmark[idx].y, image_height)
+
+        contour.append([x, y])
+    
     """
     contours = []
     contour = []
