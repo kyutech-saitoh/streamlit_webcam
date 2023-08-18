@@ -17,11 +17,14 @@ def drawB(image, face, image_width, image_height):
     all_left_eye_idxs = set(np.ravel(all_left_eye_idxs))
 
     contours = []
+    contour = []
     for idx in all_left_eye_idxs:
         x = func(face.landmark[idx].x, image_width)
         y = func(face.landmark[idx].y, image_height)
 
-        contours.attend((x, y))
+        contour.attend((x, y))
+
+    contours.append(contour)
 
     cv2.drawContours(image, contours, -1, (0, 0, 255), thickness=2)
     
