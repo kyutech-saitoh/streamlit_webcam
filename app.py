@@ -14,7 +14,6 @@ def func(value1, value2):
 
 def drawB(image, face, image_width, image_height):
     left_eye_idxs = [133, 173, 157, 158, 159, 160, 161, 246, 33, 7, 163, 144, 145, 153, 154, 155, 133]
-    """
     right_eye_idxs = [362, 398, 384, 385, 386, 387, 388, 466, 263, 249, 390, 373, 374, 380, 381, 382, 362]
     left_eyebrow_idxs = [55, 65, 52, 53, 46]
     right_eyebrow_idxs = [285, 295, 282, 283, 276]
@@ -69,7 +68,6 @@ def drawB(image, face, image_width, image_height):
         y2 = func(face.landmark[idx2].y, image_height)
 
         cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(0, 0, 255), thickness=2)
-    """
     
     return image
     
