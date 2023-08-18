@@ -31,7 +31,8 @@ def drawB(image, face, image_width, image_height):
         y = func(face.landmark[idx].y, image_height)
 
         contour.append([x, y])
-    
+    cv2.polylines(image, [contour], True, (0, 0, 255), 1)
+
     """
     contours = []
     contour = []
