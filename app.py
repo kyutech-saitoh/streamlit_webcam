@@ -21,7 +21,7 @@ def drawB(image, face, image_width, image_height):
         x = func(face.landmark[idx].x, image_width)
         y = func(face.landmark[idx].y, image_height)
 
-        contour.attend((x, y))
+        contour.append((x, y))
 
     contours.append(contour)
 
