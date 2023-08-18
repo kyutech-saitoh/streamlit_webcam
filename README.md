@@ -1,6 +1,6 @@
 # streamlit_webcam
 
-This is a sample program using Streamlit + Webcam + MediaPipe.
+This is a sample program for facial image processing using Streamlit + Webcam + MediaPipe.
 
 When you access the following URL and start the app, the system information will be displayed.
 
@@ -8,7 +8,7 @@ When you access the following URL and start the app, the system information will
 
 ---
 
-Streamlit + Webカメラ + MediaPipeを利用したサンプルプログラムです。
+Streamlit + Webカメラ + MediaPipeを利用した顔画像処理のサンプルプログラムです。
 
 下記URLにアクセスしてアプリを起動すると、システム情報が表示されます。
 
