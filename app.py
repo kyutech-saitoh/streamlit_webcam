@@ -15,6 +15,7 @@ def func(value1, value2):
 def drawB(image, face, image_width, image_height):
     left_eye_idxs = [133, 173, 157, 158, 159, 160, 161, 246, 33, 7, 163, 144, 145, 153, 154, 155, 133]
     right_eye_idxs = [362, 398, 384, 385, 386, 387, 388, 466, 263, 249, 390, 373, 374, 380, 381, 382, 362]
+    lip_idxs = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, 375, 321, 405, 314, 17, 84, 181, 91, 146, 61]
 
     for i in range(len(left_eye_idxs)-1):
         idx1 = int(left_eye_idxs[i])
@@ -24,7 +25,7 @@ def drawB(image, face, image_width, image_height):
         x2 = func(face.landmark[idx2].x, image_width)
         y2 = func(face.landmark[idx2].y, image_height)
 
-        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(0, 0, 255), thickness=2)
+        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(255, 0, 0), thickness=2)
 
     for i in range(len(right_eye_idxs)-1):
         idx1 = int(right_eye_idxs[i])
@@ -34,31 +35,17 @@ def drawB(image, face, image_width, image_height):
         x2 = func(face.landmark[idx2].x, image_width)
         y2 = func(face.landmark[idx2].y, image_height)
 
-        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(255, 0, 0), thickness=2)
+        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(0, 255, 0), thickness=2)
 
-    """
-    contours = []
-    contour = []
-    for i in range(len(left_eye_idxs)):
-        idx1 = int(left_eye_idxs[i])
-        idx2 = int(left_eye_idxs[i+1])
-        #idx1 = i
-        #idx2 = i + 1
+    for i in range(len(lip_idxs)-1):
+        idx1 = int(lip_idxs[i])
+        idx2 = int(lip_idxs[i+1])
         x1 = func(face.landmark[idx1].x, image_width)
         y1 = func(face.landmark[idx1].y, image_height)
         x2 = func(face.landmark[idx2].x, image_width)
         y2 = func(face.landmark[idx2].y, image_height)
 
-#        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(150, 150, 0), thickness=1)
-        cv2.circle(image, (x1, y1), 2, color=(255, 255, 255), thickness=-1)
-#        contour.append([x, y])
-
-#    contours.append(contour)
-
-#    cv2.polylines(image, [contour], True, (0, 0, 255), 1)
-
-#    cv2.drawContours(image, contour, -1, (0, 0, 255), thickness=2)
-    """
+        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(0, 0, 255), thickness=2)
     
     return image
     
