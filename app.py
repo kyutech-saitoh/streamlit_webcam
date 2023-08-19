@@ -73,6 +73,11 @@ def drawB(image, face, image_width, image_height):
     
 
 def drawC(image, face, image_width, image_height):
+    nosex = func(face.landmark[1].x, image_width)
+    nosey = func(face.landmark[1].y, image_height)
+
+    face_size = func(np.sqrt((face.landmark[1].x - face.landmark[234].x)**2 + (face.landmark[1].y - face.landmark[234].y)**2) * 2, image_width)
+
     eye_width1 = func(np.sqrt((face.landmark[133].x - face.landmark[33].x)**2 + (face.landmark[133].y - face.landmark[33].y)**2) * 2, image_width)
     eye_height1 = func(np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2) * 3, image_height)
     eye_width2 = func(np.sqrt((face.landmark[362].x - face.landmark[263].x)**2 + (face.landmark[362].y - face.landmark[263].y)**2) * 2, image_width)
@@ -102,6 +107,7 @@ def drawC(image, face, image_width, image_height):
     lip_centerx = func((face.landmark[57].x + face.landmark[287].x + face.landmark[0].x + face.landmark[17].x) / 4, image_width)
     lip_centery = func((face.landmark[57].y + face.landmark[287].y + face.landmark[0].y + face.landmark[17].y) / 4, image_height)
 
+    cv2.circle(image, center=(nosex, nosey), radius=face_size, color=(135, 184, 222), thickness=-1)
     cv2.ellipse(image, ((eye_center1x, eye_center1y), (eye_width1, eye_height1), eye_angle1), (255, 255, 255), -1)
     cv2.ellipse(image, ((eye_center2x, eye_center2y), (eye_width2, eye_height2), eye_angle2), (255, 255, 255), -1)
     cv2.circle(image, center=(pupil1x, pupil1y), radius=iris_size1a, color=(150, 150, 0), thickness=-1)
