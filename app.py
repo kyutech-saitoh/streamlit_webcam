@@ -75,7 +75,7 @@ def drawB(image, face, image_width, image_height):
 def drawC(image, face, image_width, image_height):
     nosex = func(face.landmark[1].x, image_width)
     nosey = func(face.landmark[1].y, image_height)
-    face_size = func(np.sqrt((face.landmark[234].x - face.landmark[454].x)**2 + (face.landmark[234].y - face.landmark[454].y)**2) / 2 * 1.5, image_width)
+    face_size = func(np.sqrt((face.landmark[234].x - face.landmark[454].x)**2 + (face.landmark[234].y - face.landmark[454].y)**2) / 2 * 1.2, image_width)
 
     eye_width1 = func(np.sqrt((face.landmark[133].x - face.landmark[33].x)**2 + (face.landmark[133].y - face.landmark[33].y)**2) * 2, image_width)
     eye_height1 = func(np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2) * 3, image_height)
