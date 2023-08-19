@@ -75,14 +75,12 @@ def drawB(image, face, image_width, image_height):
 def drawC(image, face, image_width, image_height):
     nosex = func(face.landmark[1].x, image_width)
     nosey = func(face.landmark[1].y, image_height)
-
     face_size = func(np.sqrt((face.landmark[1].x - face.landmark[234].x)**2 + (face.landmark[1].y - face.landmark[234].y)**2) * 2, image_width)
 
     eye_width1 = func(np.sqrt((face.landmark[133].x - face.landmark[33].x)**2 + (face.landmark[133].y - face.landmark[33].y)**2) * 2, image_width)
     eye_height1 = func(np.sqrt((face.landmark[159].x - face.landmark[145].x)**2 + (face.landmark[159].y - face.landmark[145].y)**2) * 3, image_height)
     eye_width2 = func(np.sqrt((face.landmark[362].x - face.landmark[263].x)**2 + (face.landmark[362].y - face.landmark[263].y)**2) * 2, image_width)
     eye_height2 = func(np.sqrt((face.landmark[386].x - face.landmark[374].x)**2 + (face.landmark[386].y - face.landmark[374].y)**2) * 3, image_height)
-
     eye_angle1 = np.arctan2(face.landmark[33].y - face.landmark[133].y, face.landmark[33].x - face.landmark[133].x) * 180 / np.pi
     eye_angle2 = np.arctan2(face.landmark[263].y - face.landmark[362].y, face.landmark[263].x - face.landmark[362].x) * 180 / np.pi
 
@@ -114,7 +112,6 @@ def drawC(image, face, image_width, image_height):
     cv2.circle(image, center=(pupil1x, pupil1y), radius=iris_size1b, color=(0, 0, 0), thickness=-1)
     cv2.circle(image, center=(pupil2x, pupil2y), radius=iris_size2a, color=(150, 150, 0), thickness=-1)
     cv2.circle(image, center=(pupil2x, pupil2y), radius=iris_size2b, color=(0, 0, 0), thickness=-1)
-
     cv2.ellipse(image, ((lip_centerx, lip_centery), (lip_width, lip_height), lip_angle), (150, 150, 255), -1)
     
     return image
