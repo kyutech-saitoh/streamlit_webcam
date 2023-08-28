@@ -6,6 +6,8 @@ You can access the URL below and launch the app to try it out. You can try it no
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://kyutech-saitoh-webcam-facemotion.streamlit.app)
 
+<a href="https://kyutech-saitoh-webcam-facemotion.streamlit.app/" target="_blank" rel="noopener noreferrer">https://kyutech-saitoh-webcam-facemotion.streamlit.app/</a>
+
 ![QR](data/QR.png)
 
 ---
