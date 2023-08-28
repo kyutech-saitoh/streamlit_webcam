@@ -4,7 +4,7 @@ This is a sample program for facial image processing using Streamlit + Webcam + 
 
 You can access the URL below and launch the app to try it out. You can try it not only on your PC but also on your tablet or smartphone.
 
-<a href="https://kyutech-saitoh-webcam-facemotion.streamlit.app/" target="_blank" rel="noopener noreferrer">https://kyutech-saitoh-webcam-facemotion.streamlit.app/</a>
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://kyutech-saitoh-webcam-facemotion.streamlit.app)
 
 ![QR](data/QR.png)
 
