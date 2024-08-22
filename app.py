@@ -15,9 +15,12 @@ def func(value1, value2):
 def drawB(image, face, image_width, image_height):
     left_eye_idxs = [133, 173, 157, 158, 159, 160, 161, 246, 33, 7, 163, 144, 145, 153, 154, 155, 133]
     right_eye_idxs = [362, 398, 384, 385, 386, 387, 388, 466, 263, 249, 390, 373, 374, 380, 381, 382, 362]
+    left_eye_ball_idxs = [470, 469, 472, 471, 470]
+    right_eye_ball_idxs = [475, 474, 477, 476, 475]
     left_eyebrow_idxs = [55, 65, 52, 53, 46]
     right_eyebrow_idxs = [285, 295, 282, 283, 276]
     lip_idxs = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, 375, 321, 405, 314, 17, 84, 181, 91, 146, 61]
+    outline_idxs = [10, 338, 297, 332, 284, 251, 389, 356, 454, 323, 361, 288, 397, 365, 379, 378, 400, 377, 152, 148, 176, 149, 150, 136, 172, 58, 132, 93, 234, 127, 162, 21, 54, 103, 67, 109, 10]
 
     for i in range(len(left_eye_idxs)-1):
         idx1 = left_eye_idxs[i]
@@ -28,10 +31,30 @@ def drawB(image, face, image_width, image_height):
         y2 = func(face.landmark[idx2].y, image_height)
 
         cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(255, 0, 0), thickness=2)
-        
+
+    for i in range(len(left_eye_ball_idxs)-1):
+        idx1 = left_eye_ball_idxs[i]
+        idx2 = left_eye_ball_idxs[i+1]
+        x1 = func(face.landmark[idx1].x, image_width)
+        y1 = func(face.landmark[idx1].y, image_height)
+        x2 = func(face.landmark[idx2].x, image_width)
+        y2 = func(face.landmark[idx2].y, image_height)
+
+        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(255, 0, 0), thickness=2)
+
     for i in range(len(right_eye_idxs)-1):
         idx1 = right_eye_idxs[i]
         idx2 = right_eye_idxs[i+1]
+        x1 = func(face.landmark[idx1].x, image_width)
+        y1 = func(face.landmark[idx1].y, image_height)
+        x2 = func(face.landmark[idx2].x, image_width)
+        y2 = func(face.landmark[idx2].y, image_height)
+
+        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(0, 255, 0), thickness=2)
+
+    for i in range(len(right_eye_ball_idxs)-1):
+        idx1 = right_eye_ball_idxs[i]
+        idx2 = right_eye_ball_idxs[i+1]
         x1 = func(face.landmark[idx1].x, image_width)
         y1 = func(face.landmark[idx1].y, image_height)
         x2 = func(face.landmark[idx2].x, image_width)
@@ -69,6 +92,16 @@ def drawB(image, face, image_width, image_height):
 
         cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(0, 0, 255), thickness=2)
     
+    for i in range(len(outline_idxs)-1):
+        idx1 = outline_idxs[i]
+        idx2 = outline_idxs[i+1]
+        x1 = func(face.landmark[idx1].x, image_width)
+        y1 = func(face.landmark[idx1].y, image_height)
+        x2 = func(face.landmark[idx2].x, image_width)
+        y2 = func(face.landmark[idx2].y, image_height)
+
+        cv2.line(image, pt1=(x1, y1), pt2=(x2, y2), color=(255, 255, 255), thickness=2)
+
     return image
     
 
@@ -159,6 +192,7 @@ def drawD(image, face, image_width, image_height):
     image[lip_mask > 0] = red_lip[lip_mask > 0]
 
     return image
+
 
 def process(image, is_show_image, draw_pattern):
     out_image = image.copy()
