@@ -117,6 +117,49 @@ def drawC(image, face, image_width, image_height):
     return image
 
 
+def draw_spiral(img, center, size):
+    num_turns = 3
+    points = []
+
+    for i in range(size * num_turns):
+        angle = 0.1 * i
+        x = int(center[0] + (1 + angle) * np.cos(angle))
+        y = int(center[1] + (1 + angle) * np.sin(angle))
+        points.append((x, y))
+    
+    for i in range(1, len(points)):
+        cv2.line(img, points[i-1], points[i], (255, 0, 255), 2)
+
+
+def drawD(image, face, image_width, image_height):
+
+    left_cheeck_x = func(face.landmark[50].x, image_width)
+    left_cheeck_y = func(face.landmark[50].y, image_height)
+
+    right_cheeck_x = func(face.landmark[280].x, image_width)
+    right_cheeck_y = func(face.landmark[280].y, image_height)
+
+    draw_spiral(image, (left_cheeck_x, left_cheeck_y), 40)
+    draw_spiral(image, (right_cheeck_x, right_cheeck_y), 40)
+
+    
+    lip_idxs = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, 375, 321, 405, 314, 17, 84, 181, 91, 146, 61]
+    lip_idxs += [78, 191, 80, 81, 82, 13, 312, 311, 310, 415, 308, 324, 318, 402, 317, 14, 87, 178, 88, 78]
+
+    lip_points = [(int(func(face.landmark[i].x, image_width)), int(func(face.landmark[i].y, image_height))) for i in lip_idxs]
+    
+    lip_mask = np.zeros((image_height, image_width), dtype=np.uint8)
+    cv2.fillPoly(lip_mask, [np.array(lip_points)], 255)
+
+    lip_area = cv2.bitwise_and(image, image, mask=lip_mask)
+    red_tint = np.zeros_like(image)
+    red_tint[:] = (0, 0, 255)  # 赤色
+    red_lip = cv2.addWeighted(lip_area, 0.5, red_tint, 0.5, 0)
+
+    image[lip_mask > 0] = red_lip[lip_mask > 0]
+
+    return image
+
 def process(image, is_show_image, draw_pattern):
     out_image = image.copy()
 
@@ -177,6 +220,11 @@ def process(image, is_show_image, draw_pattern):
                 for face in results.multi_face_landmarks:
                     out_image = drawC(out_image, face, image_width, image_height) 
 
+        elif draw_pattern == "D":
+            if results.multi_face_landmarks:
+                for face in results.multi_face_landmarks:
+                    out_image = drawD(out_image, face, image_width, image_height) 
+
     return cv2.flip(out_image, 1)
 
 
@@ -210,4 +258,4 @@ webrtc_ctx = webrtc_streamer(
 
 if webrtc_ctx.video_processor:
     webrtc_ctx.video_processor.is_show_image = st.checkbox("show camera image", value=True)
-    webrtc_ctx.video_processor.draw_pattern = st.radio("select draw pattern", ["A", "B", "C", "None"], key="A", horizontal=True)
+    webrtc_ctx.video_processor.draw_pattern = st.radio("select draw pattern", ["A", "B", "C", "D", "None"], key="A", horizontal=True)
